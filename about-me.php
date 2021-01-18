@@ -106,30 +106,33 @@
 
       <!-- FAVOURITE WEBSITES -->
       <section id="links">
-        <h1>My favorite Websites</h1>
+        <h1>My Three Favourite Cryptocurrencies</h1>
         <div class="row">
-          <div class="col-md-3">
-            <a href="http://www.youtube.com" class="thumbnail">
-              <img src="images/youtube.png" alt="youtube website" height="250" width="250">
-            </a>
+          <div class="col-md-4">
+            Cryptocurrency One
+            <!-- Sample PHP API - Code to retrieve btc price -->
+            <div><?php include 'crypto-sample.php' ?></div>
+
+            <!-- API TO RETRIEVE PRICE -->
           </div>
-          <div class="col-md-3">
-            <a href="http://www.facebook.com/" class="thumbnail">
-              <img src="images/facebook-logo.png" alt="facebook website" height="250" width="250">
-            </a>
+
+          <div class="col-md-4">
+            Cryptocurrency Two:
+            <div>Price:</div>
+            <!-- API TO RETRIEVE PRICE -->
           </div>
-          <div class="col-md-3">
-            <a href="http://www.twitter.com/" class="thumbnail">
-              <img src="images/twitter.png" alt="twitter website" height="250" width="250">
-            </a>
-          </div>
-          <div class="col-md-3">
-            <a href="http://www.instagram.com/" class="thumbnail">
-              <img src="images/instagram.png" alt="Instagram web page" height="250" width="250">
-            </a>
+
+          <div class="col-md-4">
+            Cryptocurrency Three:
+            <div>Price: </div>
+            <!-- API TO RETRIEVE PRICE -->
+
           </div>
         </div>
       </section>
+
+
+      <!-- Start of CONTACT ME -->
       <section id="contact-me">
         <h1>Contact me</h1>
         <p>Clinton Pham - s3605044@student.rmit.edu.au</p>
