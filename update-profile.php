@@ -6,8 +6,8 @@
 </head>
 <body>
 
+<form action="/about-me.php">
       <div class="row">
-
         <div class="col-md-12">
           <form name="basicForm" class="form-horizontal form-bordered" novalidate>
           <div class="panel panel-default">
@@ -59,19 +59,19 @@
           <div class="panel panel-default" novalidate>
 
               <div class="panel-heading">
-                <h1 class="panel-title">3 Facts About Yourself</h1>
+                <h1 class="panel-title">Enter Your Three Favourite Cryptocurrencies</h1>
               </div>
 
               <div class="panel-body">
                 <div class="form-group">
-                  <label class="col-sm-3 control-label">Fact One</label>
+                  <label class="col-sm-3 control-label">Cryptocurrency One</label>
                   <div class="col-sm-9">
-                    <input type="text" name="fact-one" class="form-control" placeholder="Fact one here" required />
+                    <input type="text" name="cryptocurrency-one" class="form-control" placeholder="Crypto one here" required />
                     <br>
-                    <label class="col-sm-3 control-label">Fact Two</label><br>
-                     <input type="text" name="fact-two" class="form-control" placeholder="Fact one here" required /><br>
-                    <label class="col-sm-3 control-label">Fact Three</label><br>
-                     <input ng-model="fact-three" type="text" name="fact-three" class="form-control" placeholder="Fact one here" required />
+                    <label class="col-sm-3 control-label">Cryptocurrency Two</label><br>
+                     <input type="text" name="cryptocurrency-two" class="form-control" placeholder="Crypto two here" required /><br>
+                    <label class="col-sm-3 control-label">Cryptocurrency Three</label><br>
+                     <input ng-model="cryptocurrency-three" type="text" name="cryptocurrency-three" class="form-control" placeholder="Crypto three here" required />
                   </div>
                 </div>
               </div>
@@ -117,7 +117,8 @@
             <label for="img">Website Three Icon</label>
             <input type="file" id="img" name="img" accept="image/*">
             <input type="submit"  value="Upload"><br>
-        </form>
+        </form><br><br><br>
+        <input type="submit" value="Update Profile">
       </div>
 
 
@@ -130,6 +131,7 @@
 
   </div>
   </script>
+  </form>
 
 </body>
 </html>
