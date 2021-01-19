@@ -10,13 +10,11 @@
 <body>
 
     <div id="1">
-        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-radius: 22px; border: 2px solid #5d4f8b;width: 825px;">
+        <table align="center" border="0" cellpadding="0" cellspacing="0" style="border-radius: 80px; border: 3px solid #5d4f8b;width: 600px;">
             <tr>
-                <td style="margin-left:5px">
-                </td>
                 <td>
-                     <h1 style=".center; color: #c9b0d4;font-family: sans-serif"><u>
-                     Login Page</u></h1>
+                     <h1 style="center; color: #c9b0d4;font-family: sans-serif"><u>
+                     Cloud Computing Summer Semester</u></h1>
                 </td>
             </tr>
         </table>
@@ -32,7 +30,7 @@
             <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
         </form>
 
-        <a href='registration.html'>Not registered yet? Register Here</a>
+        <a href='registration.php'>Not registered yet? Register Here</a>
 
     </div>
 
