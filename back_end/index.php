@@ -13,13 +13,13 @@ use Aws\DynamoDb\Marshaler;
 // ));
 
 $sdk = new Aws\Sdk([
-    // 'profile' => 'project1',
+    'profile' => 'project1',
     'region'   => 'ap-southeast-2',
     'version'  => 'latest',
-    // 'validate' => false,
-    // 'http'    => [
-    //     'verify' => 'C:\AppServ\cacert.pem'
-    // ]
+    'validate' => false,
+    'http'    => [
+        'verify' => 'C:\AppServ\cacert.pem'
+    ]
 ]);
 
 $dynamodb = $sdk->createDynamoDb();
@@ -156,7 +156,7 @@ $marshaler = new Marshaler();
 //     echo $e->getMessage() . "\n";
 // }
 
-/** END OF WORKING CODE FOR FETCHING DATA INTO TABLE */
+/** END OF WORKING CODE FOR FETCHING DATA FROM TABLE */
 
 
 /** WORKING CODE FOR ADDING DATA INTO TABLE */
@@ -197,60 +197,60 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR CREATING TABLES */
-// $params = [
-//     'TableName' => 'Users',
-//     'KeySchema' => [
-//         // [
-//         //     'AttributeName' => 'user_id',
-//         //     'KeyType' => 'HASH'  //Partition key
-//         // ],
-//         [
-//             'AttributeName' => 'username',
-//             'KeyType' => 'HASH'  //Sort key
-//         ],
-//         [
-//             'AttributeName' => 'fullname',
-//             'KeyType' => 'RANGE'  //Sort key
-//         ],
+$params = [
+    'TableName' => 'Users',
+    'KeySchema' => [
+        // [
+        //     'AttributeName' => 'user_id',
+        //     'KeyType' => 'HASH'  //Partition key
+        // ],
+        [
+            'AttributeName' => 'username',
+            'KeyType' => 'HASH' //Partition key
+        ],
+        [
+            'AttributeName' => 'user_type',
+            'KeyType' => 'RANGE' //Sort key
+        ],
         
-//         // [
-//         //     'AttributeName' => 'password',
-//         //     'KeyType' => 'RANGE'  //Sort key
-//         // ],
-//     ],
-//     'AttributeDefinitions' => [
-//         // [
-//         //     'AttributeName' => 'user_id',
-//         //     'AttributeType' => 'N'
-//         // ],
-//         [
-//             'AttributeName' => 'username',
-//             'AttributeType' => 'S'
-//         ],
-//         [
-//             'AttributeName' => 'fullname',
-//             'AttributeType' => 'S'
-//         ],
-//         // [
-//         //     'AttributeName' => 'password',
-//         //     'AttributeType' => 'S'
-//         // ],
-//     ],
-//     'ProvisionedThroughput' => [
-//         'ReadCapacityUnits' => 5,
-//         'WriteCapacityUnits' => 5
-//     ]
-// ];
+        // [
+        //     'AttributeName' => 'password',
+        //     'KeyType' => 'RANGE'  //Sort key
+        // ],
+    ],
+    'AttributeDefinitions' => [
+        // [
+        //     'AttributeName' => 'user_id',
+        //     'AttributeType' => 'N'
+        // ],
+        [
+            'AttributeName' => 'username',
+            'AttributeType' => 'S'
+        ],
+        [
+            'AttributeName' => 'user_type',
+            'AttributeType' => 'S'
+        ],
+        // [
+        //     'AttributeName' => 'password',
+        //     'AttributeType' => 'S'
+        // ],
+    ],
+    'ProvisionedThroughput' => [
+        'ReadCapacityUnits' => 5,
+        'WriteCapacityUnits' => 5
+    ]
+];
 
-// try {
-//     $result = $dynamodb->createTable($params);
-//     echo 'Created table.  Status: ' . 
-//         $result['TableDescription']['TableStatus'] ."\n";
+try {
+    $result = $dynamodb->createTable($params);
+    echo 'Created table.  Status: ' . 
+        $result['TableDescription']['TableStatus'] ."\n";
 
-// } catch (DynamoDbException $e) {
-//     echo "Unable to create table:\n";
-//     echo $e->getMessage() . "\n";
-// }
+} catch (DynamoDbException $e) {
+    echo "Unable to create table:\n";
+    echo $e->getMessage() . "\n";
+}
 /** END OF WORKING CODE FOR CREATING TABLES */
 
 ?>
@@ -260,7 +260,6 @@ $marshaler = new Marshaler();
 
 <head>
     <h1>I will connect to dynamoDB!</h1>
-    <img src="https://seanbucket1313.s3-ap-southeast-2.amazonaws.com/images/03dvgl5fd7b61.png">
 
 </head>
 
