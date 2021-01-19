@@ -115,7 +115,7 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR FETCHING DATA WITH KEY FROM TABLE */
-// $tableName = 'Users';
+$tableName = 'Users';
 
 // ob_start(); // begin collecting output
 
@@ -123,12 +123,12 @@ $marshaler = new Marshaler();
 
 // $username = ob_get_clean(); // retrieve output from myfile.php, stop buffering
 
-// // $username = 'sean123';
-// $fullname = 'Sean Tan';
+// $username = 'alice';
+// // $fullname = 'Sean Tan';
 
 // $json = json_encode([
 //     'username' => $username,
-//     'fullname' => $fullname
+//     'user_type' => 'User'
 // ]);
 
 // $key= $marshaler->marshalJson($json);
@@ -162,14 +162,16 @@ $marshaler = new Marshaler();
 /** WORKING CODE FOR ADDING DATA INTO TABLE */
 // $tableName = 'Users';
 
-// $username = 'alice';
-// $fullname = 'Alice';
-// $password = '1234567';
-// $email = 'alice@gmail.com';
-// $gender = 'F';
+// $username = 'bob';
+// $user_type = 'User';
+// $fullname = 'Bob';
+// $password = '123123';
+// $email = 'bob@gmail.com';
+// $gender = 'M';
 
 // $json = json_encode([
 //     'username' => $username,
+//     'user_type' => $user_type,
 //     'fullname' => $fullname,
 //     'password' => $password,
 //     'email' => $email,
@@ -197,60 +199,60 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR CREATING TABLES */
-$params = [
-    'TableName' => 'Users',
-    'KeySchema' => [
-        // [
-        //     'AttributeName' => 'user_id',
-        //     'KeyType' => 'HASH'  //Partition key
-        // ],
-        [
-            'AttributeName' => 'username',
-            'KeyType' => 'HASH' //Partition key
-        ],
-        [
-            'AttributeName' => 'user_type',
-            'KeyType' => 'RANGE' //Sort key
-        ],
+// $params = [
+//     'TableName' => 'Users',
+//     'KeySchema' => [
+//         // [
+//         //     'AttributeName' => 'user_id',
+//         //     'KeyType' => 'HASH'  //Partition key
+//         // ],
+//         [
+//             'AttributeName' => 'username',
+//             'KeyType' => 'HASH' //Partition key
+//         ],
+//         [
+//             'AttributeName' => 'user_type',
+//             'KeyType' => 'RANGE' //Sort key
+//         ],
         
-        // [
-        //     'AttributeName' => 'password',
-        //     'KeyType' => 'RANGE'  //Sort key
-        // ],
-    ],
-    'AttributeDefinitions' => [
-        // [
-        //     'AttributeName' => 'user_id',
-        //     'AttributeType' => 'N'
-        // ],
-        [
-            'AttributeName' => 'username',
-            'AttributeType' => 'S'
-        ],
-        [
-            'AttributeName' => 'user_type',
-            'AttributeType' => 'S'
-        ],
-        // [
-        //     'AttributeName' => 'password',
-        //     'AttributeType' => 'S'
-        // ],
-    ],
-    'ProvisionedThroughput' => [
-        'ReadCapacityUnits' => 5,
-        'WriteCapacityUnits' => 5
-    ]
-];
+//         // [
+//         //     'AttributeName' => 'password',
+//         //     'KeyType' => 'RANGE'  //Sort key
+//         // ],
+//     ],
+//     'AttributeDefinitions' => [
+//         // [
+//         //     'AttributeName' => 'user_id',
+//         //     'AttributeType' => 'N'
+//         // ],
+//         [
+//             'AttributeName' => 'username',
+//             'AttributeType' => 'S'
+//         ],
+//         [
+//             'AttributeName' => 'user_type',
+//             'AttributeType' => 'S'
+//         ],
+//         // [
+//         //     'AttributeName' => 'password',
+//         //     'AttributeType' => 'S'
+//         // ],
+//     ],
+//     'ProvisionedThroughput' => [
+//         'ReadCapacityUnits' => 5,
+//         'WriteCapacityUnits' => 5
+//     ]
+// ];
 
-try {
-    $result = $dynamodb->createTable($params);
-    echo 'Created table.  Status: ' . 
-        $result['TableDescription']['TableStatus'] ."\n";
+// try {
+//     $result = $dynamodb->createTable($params);
+//     echo 'Created table.  Status: ' . 
+//         $result['TableDescription']['TableStatus'] ."\n";
 
-} catch (DynamoDbException $e) {
-    echo "Unable to create table:\n";
-    echo $e->getMessage() . "\n";
-}
+// } catch (DynamoDbException $e) {
+//     echo "Unable to create table:\n";
+//     echo $e->getMessage() . "\n";
+// }
 /** END OF WORKING CODE FOR CREATING TABLES */
 
 ?>
