@@ -15,9 +15,9 @@
 <input type="text" name="username" placeholder="Username" required />
 <input type="email" name="email" placeholder="Email" required />
 <input type="password" name="password" placeholder="Password" required />
-<input type="submit" name="submit" value="Register" />
+<input href="update-profile.php" type="submit" name="submit" value="Register" />
 </form>
-<a href='loginpage.html'>Not registered yet? Register Here</a>
+<a href='loginpage.php'>Registered already? Click Here!</a>
 
 
 </div>
