@@ -1,6 +1,8 @@
 <?php
 
-require '../vendor/autoload.php';
+// session_start();
+
+// require '../vendor/autoload.php';
 
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
@@ -10,8 +12,11 @@ use Aws\DynamoDb\Marshaler;
 // $password = trim($_POST['password']);
 
 // placeholders for testing
-$input_username = 'alice1';
-$input_password = '1234567';
+// $input_username = 'alice1';
+// $input_password = '1234567';
+
+// echo $input_username;
+// echo $input_password;
 
 // initializing aws sdk for dynamodb
 $sdk = new Aws\Sdk([
@@ -55,6 +60,7 @@ try {
     }
 
     if ($database_password == $input_password) {
+        $_SESSION['username'] = $input_username;
         echo true;
     }
     else {

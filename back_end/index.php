@@ -1,9 +1,28 @@
 <?php
 
-require 'vendor/autoload.php';
+// session_start();
+// require 'vendor/autoload.php';
 
-use Aws\DynamoDb\Exception\DynamoDbException;
-use Aws\DynamoDb\Marshaler;
+// $input_username = 'alice';
+// $input_password = '1234567';
+
+// ob_start(); // begin collecting output
+
+// include 'functions/login.php';
+
+// $login = ob_get_clean(); // retrieve output from myfile.php, stop buffering
+// // echo $login;
+// if ($login == 1) {
+//     echo '<h1>login success! Welcome ' .$_SESSION['username']. '</h1>';
+// }
+// else {
+//     echo '<h1>login failed</h1>';
+// }
+
+// require 'vendor/autoload.php';
+
+// use Aws\DynamoDb\Exception\DynamoDbException;
+// use Aws\DynamoDb\Marshaler;
 
 // Instantiate a client with the credentials from the project1 profile
 // $dynamoDbClient = DynamoDbClient::factory(array(
@@ -12,18 +31,18 @@ use Aws\DynamoDb\Marshaler;
 //     'version' => '2012-08-10'
 // ));
 
-$sdk = new Aws\Sdk([
-    'profile' => 'project1',
-    'region'   => 'ap-southeast-2',
-    'version'  => 'latest',
-    'validate' => false,
-    'http'    => [
-        'verify' => 'C:\AppServ\cacert.pem'
-    ]
-]);
+// $sdk = new Aws\Sdk([
+//     'profile' => 'project1',
+//     'region'   => 'ap-southeast-2',
+//     'version'  => 'latest',
+//     'validate' => false,
+//     'http'    => [
+//         'verify' => 'C:\AppServ\cacert.pem'
+//     ]
+// ]);
 
-$dynamodb = $sdk->createDynamoDb();
-$marshaler = new Marshaler();
+// $dynamodb = $sdk->createDynamoDb();
+// $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR QUERYING DATA (KEY VALUES) FROM TABLE */
@@ -115,7 +134,7 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR FETCHING DATA WITH KEY FROM TABLE */
-$tableName = 'Users';
+// $tableName = 'Users';
 
 // ob_start(); // begin collecting output
 
