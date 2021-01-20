@@ -1,7 +1,7 @@
 <?php
 
 // session_start();
-// require 'vendor/autoload.php';
+require 'vendor/autoload.php';
 
 // $input_username = 'alice';
 // $input_password = '1234567';
@@ -21,8 +21,8 @@
 
 // require 'vendor/autoload.php';
 
-// use Aws\DynamoDb\Exception\DynamoDbException;
-// use Aws\DynamoDb\Marshaler;
+use Aws\DynamoDb\Exception\DynamoDbException;
+use Aws\DynamoDb\Marshaler;
 
 // Instantiate a client with the credentials from the project1 profile
 // $dynamoDbClient = DynamoDbClient::factory(array(
@@ -31,18 +31,18 @@
 //     'version' => '2012-08-10'
 // ));
 
-// $sdk = new Aws\Sdk([
-//     'profile' => 'project1',
-//     'region'   => 'ap-southeast-2',
-//     'version'  => 'latest',
-//     'validate' => false,
-//     'http'    => [
-//         'verify' => 'C:\AppServ\cacert.pem'
-//     ]
-// ]);
+$sdk = new Aws\Sdk([
+    'profile' => 'project1',
+    'region'   => 'ap-southeast-2',
+    'version'  => 'latest',
+    'validate' => false,
+    'http'    => [
+        'verify' => 'C:\AppServ\cacert.pem'
+    ]
+]);
 
-// $dynamodb = $sdk->createDynamoDb();
-// $marshaler = new Marshaler();
+$dynamodb = $sdk->createDynamoDb();
+$marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR QUERYING DATA (KEY VALUES) FROM TABLE */
@@ -179,47 +179,39 @@
 
 
 /** WORKING CODE FOR ADDING DATA INTO TABLE */
-// $tableName = 'Users';
+$tableName = 'FriendRequest';
 
-// $username = 'bob';
-// $user_type = 'User';
-// $fullname = 'Bob';
-// $password = '123123';
-// $email = 'bob@gmail.com';
-// $gender = 'M';
+$username = 'bob';
+$targetname = 'sean';
 
-// $json = json_encode([
-//     'username' => $username,
-//     'user_type' => $user_type,
-//     'fullname' => $fullname,
-//     'password' => $password,
-//     'email' => $email,
-//     'gender' => $gender
-// ]);
+$json = json_encode([
+    'username' => $username,
+    'targetname' => $targetname
+]);
 
-// $item = $marshaler->marshalJson($json);
+$item = $marshaler->marshalJson($json);
 
-// $params = [
-//     'TableName' => $tableName,
-//     'Item' => $item
-// ];
+$params = [
+    'TableName' => $tableName,
+    'Item' => $item
+];
 
 
-// try {
-//     $result = $dynamodb->putItem($params);
-//     echo "Added item: $username - $fullname\n";
+try {
+    $result = $dynamodb->putItem($params);
+    echo "Added item: $username - $targetname\n";
 
-// } catch (DynamoDbException $e) {
-//     echo "Unable to add item:\n";
-//     echo $e->getMessage() . "\n";
-// }
+} catch (DynamoDbException $e) {
+    echo "Unable to add item:\n";
+    echo $e->getMessage() . "\n";
+}
 /** END OF WORKING CODE FOR ADDING DATA INTO TABLE */
 
 
 
 /** WORKING CODE FOR CREATING TABLES */
 // $params = [
-//     'TableName' => 'Users',
+//     'TableName' => 'FriendRequest',
 //     'KeySchema' => [
 //         // [
 //         //     'AttributeName' => 'user_id',
@@ -230,7 +222,7 @@
 //             'KeyType' => 'HASH' //Partition key
 //         ],
 //         [
-//             'AttributeName' => 'user_type',
+//             'AttributeName' => 'targetname',
 //             'KeyType' => 'RANGE' //Sort key
 //         ],
         
@@ -249,7 +241,7 @@
 //             'AttributeType' => 'S'
 //         ],
 //         [
-//             'AttributeName' => 'user_type',
+//             'AttributeName' => 'targetname',
 //             'AttributeType' => 'S'
 //         ],
 //         // [
