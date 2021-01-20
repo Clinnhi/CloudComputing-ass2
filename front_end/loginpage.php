@@ -35,7 +35,16 @@ session_start();
             <input type="password" name="password" placeholder="Password" required="required" />
 
             <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
-               
+              
+              <span class="warning"> 
+              <?php
+                    if(isset($_SESSION["error"])){
+                        $error = $_SESSION["error"];
+                        echo "<span>$error</span>";
+                    }
+                ?> 
+            </span>
+
         </form>
 
         <a href='registration.php'>Not registered yet? Register Here</a>
