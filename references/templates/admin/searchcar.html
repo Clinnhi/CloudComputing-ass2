@@ -1,0 +1,93 @@
+{% extends "adminbase.html" %}
+{% block title %}Search Car{% endblock %}
+{% block body %}
+
+
+<div class="box">
+	<h2> Search Car</h2>
+	<form action="searchcar" method=post >
+		<div style="padding:5px; width:75%;margin-left:auto;margin-right:auto;">
+			<label>Search by </label>
+			<select name='column'>
+				<option value="make">Make</option>
+				<option value="body_type">Body Type</option>
+				<option value="colour">Colour</option>
+				<option value="seats">Seats</option>
+				<option value="location">Location</option>
+				<option value="cost">Cost per hour</option>
+			</select> 			
+			<input type="text" name='search'>
+			<input type="submit" value="Search"> 
+		</div>
+	</form>
+	<button onclick="window.location.href='searchcarbyvoice'"> Voice Search </button> 
+	</form>
+	<div id="searchCar">
+		<br><br>
+		{% if search %}
+			<p>Showing search result {{search}} in column {{column}}</p>
+			<br>
+		{% endif %}
+		{% if cars %}
+			<table>
+			<tr>
+				<th>Car ID</th>
+				<th>Make</th>
+				<th>Body Type</th>
+				<th>Colour</th>
+				<th>Seats</th>
+				<th>Cost</th>
+				<th>Availability</th>
+				<th>Update</th>
+				<th>Report Car</th>
+				<th>Delete</th>
+			</tr>
+			{% for car in cars %}
+				<tr>
+					<td>{{car[0]}}</td>
+					<form method=post action="carhistory">
+						<td><button style="border: none; padding: 0; background: none;" name="id" value="{{car[0]}}">{{car[1]}}</button></td>
+					</form>
+					<td>{{car[2]}}</td>
+					<td>{{car[3]}}</td>
+					<td>{{car[4]}}</td>
+					<td>{{car[6]}}</td>
+					{% if car[7]==1 %}
+						<td>Avalaible</td>
+					{% elif car[7]==0 %}
+						<td>Unavalaible</td>
+					{% else %}
+						<td>Broken</td>
+                    {% endif %}
+                    {% if car[7]==1 %}
+                        <form method=post action="updatecarpage">
+                            <td><button name="id" value="{{car[0]}}">Update</button></td>
+                        </form>
+                    {% elif car[7]==0 %}
+						<td>Being rented</td>
+					{% else %}
+						<td>Broken</td>
+                    {% endif %}
+                    {% if car[7]==1 %}
+                        <form method=post action="reportcar">
+                            <input type="hidden" name="make" value="{{car[1]}}">
+                            <td><button name="id" value="{{car[0]}}">Report</button></td>
+                        </form>
+                    {% elif car[7]==0 %}
+						<td>Being rented</td>
+					{% else %}
+                        <td>Already Broken</td>
+					{% endif %}
+					<form method=post action="deletecar">
+						<td><button name="delete" value="{{car[0]}}">Delete</button></td>
+					</form>
+				</tr>
+			{% endfor %}
+		</table>
+		{% else %}
+			<div>No result</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+
