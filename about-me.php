@@ -3,7 +3,8 @@
     <meta charset="UTF-8">
 
     <title>Profile page</title>
-    
+      
+    <link rel="stylesheet" href="css/about-me.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -22,13 +23,39 @@
           <li><a href="#about-me">About Me</a></li>
           <li><a href="#contact-me">Contact Me</a></li>
         </ul>
+
+           <form class="form-inline">
+            <div class="input-group">
+              <div class="input-group-prepend">
+            </div>
+
+            
+             </div>
+           </form>
+
+           <!-- SEARCH USERNAME -->
+            <span class="right_header"> <input type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1">
+            </span>
       </nav>
+
+
+
       
       <section id="greetings" class="jumbotron">
         <h1>Cloud Computing Assignment Two <script language="javascript">
         </script>
         </h1>
-        <p> Welcome to my profile page. </br></p>
+        <span class="center"> <p> Welcome to my profile page. </br></p> </span>
+
+        <!-- CONNECT WITH ME BUTTON -->
+        <!-- <form method="post"> -->
+        <div>   
+          <button id="primary" >Connect With Me!</button>
+        </div>
+        <script src="javascript/connect-button.js"></script>
+        <?php include 'connect-with-me.php' ?> 
+        <!-- </form> -->
+
       </section>
 
 
