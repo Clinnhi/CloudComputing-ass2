@@ -34,8 +34,11 @@
            </form>
 
            <!-- SEARCH USERNAME -->
-            <span class="right_header"> <input type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1">
+           <form action="display-user.php" method="get" name="form"> 
+            <span class="right_header"> 
+              <input name="search_username" id="search_username" type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1">
             </span>
+          </form>
       </nav>
 
 
