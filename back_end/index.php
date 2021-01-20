@@ -1,9 +1,28 @@
 <?php
 
-require 'vendor/autoload.php';
+// session_start();
+// require 'vendor/autoload.php';
 
-use Aws\DynamoDb\Exception\DynamoDbException;
-use Aws\DynamoDb\Marshaler;
+// $input_username = 'alice';
+// $input_password = '1234567';
+
+// ob_start(); // begin collecting output
+
+// include 'functions/login.php';
+
+// $login = ob_get_clean(); // retrieve output from myfile.php, stop buffering
+// // echo $login;
+// if ($login == 1) {
+//     echo '<h1>login success! Welcome ' .$_SESSION['username']. '</h1>';
+// }
+// else {
+//     echo '<h1>login failed</h1>';
+// }
+
+// require 'vendor/autoload.php';
+
+// use Aws\DynamoDb\Exception\DynamoDbException;
+// use Aws\DynamoDb\Marshaler;
 
 // Instantiate a client with the credentials from the project1 profile
 // $dynamoDbClient = DynamoDbClient::factory(array(
@@ -12,18 +31,18 @@ use Aws\DynamoDb\Marshaler;
 //     'version' => '2012-08-10'
 // ));
 
-$sdk = new Aws\Sdk([
-    // 'profile' => 'project1',
-    'region'   => 'ap-southeast-2',
-    'version'  => 'latest',
-    // 'validate' => false,
-    // 'http'    => [
-    //     'verify' => 'C:\AppServ\cacert.pem'
-    // ]
-]);
+// $sdk = new Aws\Sdk([
+//     'profile' => 'project1',
+//     'region'   => 'ap-southeast-2',
+//     'version'  => 'latest',
+//     'validate' => false,
+//     'http'    => [
+//         'verify' => 'C:\AppServ\cacert.pem'
+//     ]
+// ]);
 
-$dynamodb = $sdk->createDynamoDb();
-$marshaler = new Marshaler();
+// $dynamodb = $sdk->createDynamoDb();
+// $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR QUERYING DATA (KEY VALUES) FROM TABLE */
@@ -123,12 +142,12 @@ $marshaler = new Marshaler();
 
 // $username = ob_get_clean(); // retrieve output from myfile.php, stop buffering
 
-// // $username = 'sean123';
-// $fullname = 'Sean Tan';
+// $username = 'alice';
+// // $fullname = 'Sean Tan';
 
 // $json = json_encode([
 //     'username' => $username,
-//     'fullname' => $fullname
+//     'user_type' => 'User'
 // ]);
 
 // $key= $marshaler->marshalJson($json);
@@ -156,20 +175,22 @@ $marshaler = new Marshaler();
 //     echo $e->getMessage() . "\n";
 // }
 
-/** END OF WORKING CODE FOR FETCHING DATA INTO TABLE */
+/** END OF WORKING CODE FOR FETCHING DATA FROM TABLE */
 
 
 /** WORKING CODE FOR ADDING DATA INTO TABLE */
 // $tableName = 'Users';
 
-// $username = 'alice';
-// $fullname = 'Alice';
-// $password = '1234567';
-// $email = 'alice@gmail.com';
-// $gender = 'F';
+// $username = 'bob';
+// $user_type = 'User';
+// $fullname = 'Bob';
+// $password = '123123';
+// $email = 'bob@gmail.com';
+// $gender = 'M';
 
 // $json = json_encode([
 //     'username' => $username,
+//     'user_type' => $user_type,
 //     'fullname' => $fullname,
 //     'password' => $password,
 //     'email' => $email,
@@ -206,11 +227,11 @@ $marshaler = new Marshaler();
 //         // ],
 //         [
 //             'AttributeName' => 'username',
-//             'KeyType' => 'HASH'  //Sort key
+//             'KeyType' => 'HASH' //Partition key
 //         ],
 //         [
-//             'AttributeName' => 'fullname',
-//             'KeyType' => 'RANGE'  //Sort key
+//             'AttributeName' => 'user_type',
+//             'KeyType' => 'RANGE' //Sort key
 //         ],
         
 //         // [
@@ -228,7 +249,7 @@ $marshaler = new Marshaler();
 //             'AttributeType' => 'S'
 //         ],
 //         [
-//             'AttributeName' => 'fullname',
+//             'AttributeName' => 'user_type',
 //             'AttributeType' => 'S'
 //         ],
 //         // [
@@ -260,7 +281,6 @@ $marshaler = new Marshaler();
 
 <head>
     <h1>I will connect to dynamoDB!</h1>
-    <img src="https://seanbucket1313.s3-ap-southeast-2.amazonaws.com/images/03dvgl5fd7b61.png">
 
 </head>
 
