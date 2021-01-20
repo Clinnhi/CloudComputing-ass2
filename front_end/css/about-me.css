@@ -1,0 +1,14 @@
+.right_header{
+	float: right;
+}
+
+.center {
+  text-align: center;
+}
+
+.onClick {
+    background: green;
+    border: 1px solid #ccc;
+    padding: 10px;
+    color: #fff;
+}

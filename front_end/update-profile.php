@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+
   <title>Update Profile</title>
   <link rel="stylesheet" href="css/update-profile.css" />
+  
 
 
 </head>
@@ -105,19 +107,19 @@
         </div>
         <form action="/action_page.php">
             Website One:
-            <input ng-model="website-one-url" type="text" name="website-one-url" class="form-control" placeholder="URL to website one" required />
-            <label for="img">Website One Icon</label>
+            <input ng-model="website-one-url" type="text" name="website-one-url" class="form-control" placeholder="URL to website one" required /><br>
+            <label for="img">Website One Icon:</label>
             <input type="file" id="website-one-img" name="website-one-img" accept="image/*">
-            <br>
+            <br><br>
 
             Website Two:
-            <input ng-model="website-two-url" type="text" name="website-two-url" class="form-control" placeholder="URL to website one" required />
-            <label for="img">Website Two Icon</label>
+            <input ng-model="website-two-url" type="text" name="website-two-url" class="form-control" placeholder="URL to website one" required /><br>
+            <label for="img">Website Two Icon:</label>
             <input type="file" id="website-two-img" name="website-two-img" accept="image/*">
-            <br>
+            <br><br>
 
             Website Three:
-            <input ng-model="website-three-url" type="text" name="website-three-url-three" class="form-control" placeholder="URL to website one" required />
+            <input ng-model="website-three-url" type="text" name="website-three-url-three" class="form-control" placeholder="URL to website one" required /><br>
             <label for="img">Website Three Icon</label>
             <input type="file" id="img" name="img" accept="image/*">
             <input type="submit"  value="Upload"><br>
