@@ -89,7 +89,7 @@ $marshaler = new Marshaler();
 //     echo $e->getMessage() . "\n";
 // }
 
-/** END OF WORKING CODE FOR SCANNING DATA (NON-KEY VALUES) FROM TABLE */
+/** END OF WORKING CODE FOR SCANNING DATA (KEY VALUES) FROM TABLE */
 
 
 
@@ -179,32 +179,32 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR ADDING DATA INTO TABLE */
-$tableName = 'FriendRequest';
+// $tableName = 'FriendRequest';
 
-$username = 'bob';
-$targetname = 'sean';
+// $username = 'bob';
+// $targetname = 'sean';
 
-$json = json_encode([
-    'username' => $username,
-    'targetname' => $targetname
-]);
+// $json = json_encode([
+//     'username' => $username,
+//     'targetname' => $targetname
+// ]);
 
-$item = $marshaler->marshalJson($json);
+// $item = $marshaler->marshalJson($json);
 
-$params = [
-    'TableName' => $tableName,
-    'Item' => $item
-];
+// $params = [
+//     'TableName' => $tableName,
+//     'Item' => $item
+// ];
 
 
-try {
-    $result = $dynamodb->putItem($params);
-    echo "Added item: $username - $targetname\n";
+// try {
+//     $result = $dynamodb->putItem($params);
+//     echo "Added item: $username - $targetname\n";
 
-} catch (DynamoDbException $e) {
-    echo "Unable to add item:\n";
-    echo $e->getMessage() . "\n";
-}
+// } catch (DynamoDbException $e) {
+//     echo "Unable to add item:\n";
+//     echo $e->getMessage() . "\n";
+// }
 /** END OF WORKING CODE FOR ADDING DATA INTO TABLE */
 
 
