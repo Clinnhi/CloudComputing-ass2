@@ -134,7 +134,7 @@
       </section>
 
 
-      <!-- FAVOURITE WEBSITES -->
+      <!-- FAVOURITE CRYPTOCURRENCIES -->
       <section id="links">
         <h1>My Three Favourite Cryptocurrencies</h1>
         <div class="row">
