@@ -123,4 +123,192 @@ class DynamoDBFunctions
             return false;
         }
     }
+
+    /** UserDetails function - Returns info of a user as an array */
+    public function UserDetails($username)
+    {
+        $tableName = 'Users';
+
+        $params = [
+            'TableName' => $tableName,
+            'KeyConditionExpression' => '#username = :username',
+            'ExpressionAttributeNames' => [
+                '#username' => 'username',
+            ],
+            'ExpressionAttributeValues'=> [
+                ':username' => [
+                    'S' => $username,
+                   ],
+                ],
+        ];
+
+        try {
+            $result = $this->dynamodb->query($params);
+
+            return $result['Items'];
+
+            // foreach ($result['Items'] as $user) {
+            //     echo $this->marshaler->unmarshalValue($user['username']) . ': ' .
+            //         $this->marshaler->unmarshalValue($user['fullname']) . "\n";
+            // }
+
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Send friend request function */
+    public function SendFriendRequest($username, $targetname)
+    {
+        $tableName = 'FriendRequest';
+
+        $json = json_encode([
+            'username' => $username,
+            'targetname' => $targetname
+        ]);
+
+        $item = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Item' => $item
+        ];
+
+        try {
+            $result = $this->dynamodb->putItem($params);
+            return true;
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Accept friend request function */
+    public function AcceptFriendRequest($username, $targetname, $accept)
+    {
+        // 1. delete the friend request
+        $tableName = 'FriendRequest';
+
+        $json = json_encode([
+            'username' => $username,
+            'targetname' => $targetname
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->deleteItem($params);
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+
+        // 2. add the friend pair into Friend table if accept is true
+        if ($accept) {
+            $tableName = 'FriendList';
+
+            $json1 = json_encode([
+                'username' => $username,
+                'friendname' => $targetname
+            ]);
+
+            $json2 = json_encode([
+                'username' => $targetname,
+                'friendname' => $username
+            ]);
+
+            $item1 = $this->marshaler->marshalJson($json1);
+            $item2 = $this->marshaler->marshalJson($json2);
+
+            $params1 = [
+                'TableName' => $tableName,
+                'Item' => $item1
+            ];
+            $params2 = [
+                'TableName' => $tableName,
+                'Item' => $item2
+            ];
+
+            try {
+                $result1 = $this->dynamodb->putItem($params1);
+                $result2 = $this->dynamodb->putItem($params2);
+            } catch (DynamoDbException $e) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /** isFriend function - Check if you are friends with target user */
+    public function isFriend($username, $targetname)
+    {
+        // 1. delete the friend request
+        $tableName = 'FriendList';
+
+        $json = json_encode([
+            'username' => $username,
+            'friendname' => $targetname
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->getItem($params);
+            $array = $result["Item"];
+
+            if (!empty($array)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /** FriendList function - Returns an array of a user's friends */
+    public function FriendList($username)
+    {
+        $tableName = 'FriendList';
+
+        $params = [
+            'TableName' => $tableName,
+            'KeyConditionExpression' => '#username = :username',
+            'ExpressionAttributeNames' => [
+                '#username' => 'username',
+            ],
+            'ExpressionAttributeValues'=> [
+                ':username' => [
+                    'S' => $username,
+                   ],
+                ],
+        ];
+
+        try {
+            $result = $this->dynamodb->query($params);
+
+            return $result['Items'];
+
+            // foreach ($result['Items'] as $user) {
+            //     echo $this->marshaler->unmarshalValue($user['username']) . ': ' .
+            //         $this->marshaler->unmarshalValue($user['fullname']) . "\n";
+            // }
+
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    
 }
