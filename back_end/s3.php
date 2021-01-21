@@ -46,6 +46,7 @@ $s3Client = new S3Client([
 <html>
     <head><meta charset="UTF-8"></head>
     <body>
+        <img src="https://imagesfblite.s3-ap-southeast-2.amazonaws.com/images/testestest" style="width:200px;height:200px;">
         <h1>S3 upload example</h1>
 <?php
 if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
@@ -53,8 +54,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES
     
     try {
         $uploader = new MultipartUploader($s3Client, fopen($_FILES['userfile']['tmp_name'], 'rb'), [
-            'bucket' => 'seanbucket1313',
-            'key'    => 'images/'.$_FILES['userfile']['name']
+            'bucket' => 'imagesfblite',
+            'key'    => 'images/testestest'
         ]);
         // FIXME: you should not use 'name' for the upload, since that's the original filename from the user's computer - generate a random filename that you then store in your database, or similar
         // Upload data.

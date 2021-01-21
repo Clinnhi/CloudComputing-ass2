@@ -3,14 +3,17 @@
 session_start();
 
 require 'functions/dynamodb_functions.php';
+require 'functions/s3_functions.php';
 $app = new DynamoDBFunctions();
+$s3 = new S3Functions();
 
 $username = $_SESSION['username'];
 // $username = 'alice';
 
 $userDetails = $app->UserDetails($username);
-
 $userDetails = $userDetails[0];
+
+$userImage = $s3->getProfilePictureLink($username);
 
 ?>
 <html>
@@ -49,6 +52,16 @@ $userDetails = $userDetails[0];
 
       <section id="about-me">
         <h1>About Me</h1>
+        <img src=<?php echo $userImage; ?> style="width:200px;height:200px;">
+<?php
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+    $s3->updateProfilePicture($username, $_FILES['userfile']['tmp_name']);
+} 
+?>
+        <h4>Update profile image</h4>
+        <form enctype="multipart/form-data" action="<?=$_SERVER['PHP_SELF']?>" method="POST">
+            <input name="userfile" type="file"><input type="submit" value="Upload">
+        </form>
         <div class="row">
           <div class="col-md-8">
             <!-- RETRIEVE ABOUT ME -->
