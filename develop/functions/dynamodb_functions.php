@@ -100,7 +100,14 @@ class DynamoDBFunctions
                     'user_type' => $user_type,
                     'fullname' => $input_fullname,
                     'password' => $input_password,
-                    'email' => $input_email
+                    'email' => $input_email,
+                    'aboutme' => "-",
+                    'crypto1' => "-",
+                    'crypto2' => "-",
+                    'crypto3' => "-",
+                    'website1' => "-",
+                    'website2' => "-",
+                    'website3' => "-",
                 ]);
 
                 $item = $this->marshaler->marshalJson($json);

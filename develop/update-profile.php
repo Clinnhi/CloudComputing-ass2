@@ -1,3 +1,46 @@
+<?php
+// Start Session
+session_start();
+
+// Load the function class
+require 'functions/dynamodb_functions.php';
+$app = new DynamoDBFunctions();
+
+$register_error_message = '';
+$register_success_message = '';
+
+// check update request
+// if (!empty($_POST['fullrname'])) {
+//     $fullname = trim($_POST['fullname']);
+//     $email = trim($_POST['email']);
+//     $username = trim($_POST['username']);
+//     $password = trim($_POST['password']);
+//     'username' => $input_username,
+//         'user_type' => $user_type,
+//         'fullname' => $input_fullname,
+//         'password' => $input_password,
+//         'email' => $input_email,
+//         'aboutme' => "-",
+//         'crypto1' => "-",
+//         'crypto2' => "-",
+//         'crypto3' => "-",
+//         'website1' => "-",
+//         'website2' => "-",
+//         'website3' => "-",
+
+//     if ($username == "" || $fullname == "" || $email == "" || $password == "") {
+//         $register_error_message = 'Some fields is empty';
+//     } else {
+//         if ($app->Register($username, $fullname, $password, $email)) {
+//             $_SESSION['username'] = $username;
+//             $_SESSION["loggedIn"] = true;
+//             $register_success_message = 'Successfully registered!';
+//         } else {
+//             $register_error_message = 'Invalid username or password. Please try again.';
+//         }
+//     }
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +51,7 @@
 
 <div class="row"> 
   <div class="col-md-12">
-<form action="display-user.php" method="post">
+<form action="update-profile.php" method="post">
 
   <!-- USER INFO -->
 
