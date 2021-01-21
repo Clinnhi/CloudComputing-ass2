@@ -31,7 +31,15 @@
       <textarea  name="about-me" placeholder="Enter a description about yourself" required></textarea>
     </div>
 
-    <br><br><br>
+    <br>
+
+    <!-- THREE FACTS ABOUT YOURSELF -->
+    <div class="panel-heading"><h1 class="panel-title">Three Facts About Yourself</h1></div>
+    Fact One:  <input type="text" name="fact-one" /><br />
+    Fact Two:  <input type="text" name="fact-two" /><br />
+    Fact Three:  <input type="text" name="fact-three" /><br />
+
+    <br>
 
     <!-- FAV CRYPTOS -->
     <div class="panel-heading"><h1 class="panel-title">Enter Your Three Favourite Crypto</h1></div>
@@ -39,7 +47,7 @@
     Crypto Two:  <input type="text" name="crypto-two" /><br />
     Crypto Three:  <input type="text" name="crypto-three" /><br />
 
-    <br><br>
+    <br>
 
     <!-- UPLOAD PHOTOS -->
       <div class="panel-heading"><h1 class="panel-title">Upload Any Photos</h1></div>
