@@ -1,3 +1,18 @@
+<?php
+// Start Session
+session_start();
+
+require 'functions/dynamodb_functions.php';
+$app = new DynamoDBFunctions();
+
+$username = $_SESSION['username'];
+// $username = 'alice';
+
+$userDetails = $app->UserDetails($username);
+
+$userDetails = $userDetails[0];
+
+?>
 <html>
   <head>
     <meta charset="UTF-8">
@@ -37,7 +52,11 @@
         <div class="row">
           <div class="col-md-8">
             <!-- RETRIEVE ABOUT ME -->
-            <p>CODE TO RETRIEVE 'ABOUT ME'</p>
+            <?php
+            echo '<h4>Username: ' . $userDetails['username']['S'] . '</h4>';
+            echo '<h4>Full Name: ' . $userDetails['fullname']['S'] . '</h4>';
+            echo '<h4>Email: ' . $userDetails['email']['S'] . '</h4>';
+            ?>
             <h2>Some facts...</h2>
             <!-- RETRIEVE FACTS -->
             <ul>
