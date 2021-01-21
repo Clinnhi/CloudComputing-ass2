@@ -124,6 +124,68 @@ class DynamoDBFunctions
         }
     }
 
+    /** UpdatePersonalInfo function */
+    public function UpdatePersonalInfo($username, $fullname, $password, $email, $aboutme, $crypto1, $crypto2, $crypto3, $website1, $website2, $website3)
+    {
+        $tableName = 'Users';
+        $user_type = 'User';
+
+        // verify if database does not already have the username
+        $json = json_encode([
+            'username' => $username,
+            'user_type' => $user_type
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->getItem($params);
+            $array = $result["Item"];
+
+            //if something is fetched from database means that the username is valid
+            if (!empty($array)) {
+                // adding user info into dynamodb
+                $json = json_encode([
+                    'username' => $username,
+                    'user_type' => $user_type,
+                    'fullname' => $fullname,
+                    'password' => $password,
+                    'email' => $email,
+                    'aboutme' => $aboutme,
+                    'crypto1' => $crypto1,
+                    'crypto2' => $crypto2,
+                    'crypto3' => $crypto3,
+                    'website1' => $website1,
+                    'website2' => $website2,
+                    'website3' => $website3,
+                ]);
+
+                $item = $this->marshaler->marshalJson($json);
+
+                $params = [
+                    'TableName' => $tableName,
+                    'Item' => $item
+                ];
+
+                try {
+                    $result = $this->dynamodb->putItem($params);
+                    return true;
+                } catch (DynamoDbException $e) {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
     /** UserDetails function - Returns info of a user as an array */
     public function UserDetails($username)
     {
