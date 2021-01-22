@@ -16,10 +16,10 @@ else {
     $target_username = $_POST['user'];
 }
 
-$userDetails = $app->UserDetails($username);
+$userDetails = $app->UserDetails($target_username);
 $userDetails = $userDetails[0];
 
-$userImage = $s3->getProfilePictureLink($username);
+$userImage = $s3->getProfilePictureLink($target_username);
 
 $full_name = $userDetails['fullname']['S'];
 $email = $userDetails['email']['S'];
