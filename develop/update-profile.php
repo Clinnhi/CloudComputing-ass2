@@ -9,11 +9,13 @@ $app = new DynamoDBFunctions();
 $update_error_message = '';
 $update_success_message = '';
 
+
+$username = $_SESSION['username'];
+
 // check update request
 if (!empty($_POST['fullname'])) {
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
-    $username = trim($_POST['username']);
     $password = trim($_POST['password']);
     $user_type = 'User';
     $aboutme = trim($_POST['aboutme']);
@@ -39,10 +41,10 @@ if (!empty($_POST['fullname'])) {
 <head>
     <title>Update Profile</title>
     <?php
-    if ($register_error_message != "") {
+    if ($update_error_message != "") {
         echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $register_error_message . '</div>';
     }
-    if ($register_success_message != "") {
+    if ($update_success_message != "") {
         echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $register_success_message . '</div>';
     }
     ?>

@@ -22,7 +22,7 @@ if (!empty($_POST['username'])) {
         if ($app->Login($username, $password)) {
             $_SESSION['username'] = $username;
             $_SESSION["loggedIn"] = true;
-            header("Location: about-me.php"); // Redirect user to dashboard
+            header("Location: display-user.php"); // Redirect user to dashboard
         } else {
             $login_error_message = 'Invalid username or password. Please try again.';
         }

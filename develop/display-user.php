@@ -7,8 +7,14 @@ require 'functions/s3_functions.php';
 $app = new DynamoDBFunctions();
 $s3 = new S3Functions();
 
-$username = $_SESSION['username'];
-// $username = 'alice';
+$target_username = "";
+
+if (empty($_POST['user'])) {
+    $target_username = $_SESSION['username'];
+}
+else {
+    $target_username = $_POST['user'];
+}
 
 $userDetails = $app->UserDetails($username);
 $userDetails = $userDetails[0];
@@ -97,7 +103,7 @@ $website_three = $userDetails['website3']['S'];
       <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
           <li><a href="#news-feed">News Feed</a></li>
-          <li><a href="#about-me">About Me</a></li>
+          <li><a href="update-profile.php">Update Profile</a></li>
           <li><a href="#contact-me">Contact Me</a></li>
         </ul>
 
