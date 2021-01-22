@@ -117,9 +117,11 @@ $website_three = $userDetails['website3']['S'];
            </form>
 
            <!-- SEARCH USERNAME -->
+             <!-- SEARCH USERNAME -->
            <form action="display-user.php" method="get" name="form"> 
             <span class="right_header"> 
-              <input name="search_username" id="search_username" type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1">
+              <!-- <input name="search_username" id="search_username" type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1"> --><a href="databaseIndex.php"><button type="button" class="btn btn-primary btn-lg">Search Profile</button>
+              </a>
             </span>
           </form>
       </nav>
