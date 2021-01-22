@@ -20,8 +20,7 @@ function viewSearchResult(data){
 
 	for(let i = 0; i < data.length; i++){
 		const li = document.createElement("li");
-        // li.innerHTML = data[i]["fullname"];
-        // li.innerHTML = "<img src=" . $userImage . " style=\"width:50px;height:50px;\"><a style=\"color:white;\" href=\"display-user.php?user=". $username ."\">" . $fullname . "</a>";
+		li.innerHTML = data[i]["name"];
 		dataViewer.appendChild(li);
 	}
 }

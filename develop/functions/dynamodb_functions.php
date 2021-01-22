@@ -204,11 +204,11 @@ class DynamoDBFunctions
             'ExpressionAttributeNames' => [
                 '#username' => 'username',
             ],
-            'ExpressionAttributeValues'=> [
+            'ExpressionAttributeValues' => [
                 ':username' => [
                     'S' => $username,
-                   ],
                 ],
+            ],
         ];
 
         try {
@@ -357,11 +357,11 @@ class DynamoDBFunctions
             'ExpressionAttributeNames' => [
                 '#username' => 'username',
             ],
-            'ExpressionAttributeValues'=> [
+            'ExpressionAttributeValues' => [
                 ':username' => [
                     'S' => $username,
-                   ],
                 ],
+            ],
         ];
 
         try {
@@ -379,5 +379,75 @@ class DynamoDBFunctions
         }
     }
 
-    
+    /** SearchUser function - returns search result of user list */
+    public function SearchUser($input_name)
+    {
+        $tableName = 'Users';
+
+        $params = [
+            'TableName' => $tableName
+        ];
+
+        try {
+            $users = $this->dynamodb->scan($params);
+
+            $user_array = array();
+            $log = "";
+
+            foreach ($users['Items'] as $user) {
+                if ($input_name) {
+
+                    $string = $user['fullname']['S'];
+                    
+                    $result = stripos($string, $input_name);
+                    // $log .= '(' . $user['fullname']['S'] . 'vs' . $input_name . ')';
+                    // $log .= $result;
+                    if (strlen($result) > 0) {
+                        $log .= "1";
+                        array_push($user_array, $user);
+                    }
+                    else {
+                        $log .= "2";
+                    }
+                }
+                else {
+                    $log .= "3";
+                    array_push($user_array, $user);
+                }
+            }
+
+            // return $log;
+            return $user_array;
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+
+        //         $params = [
+        //     'TableName' => $tableName,
+        //     'FilterExpression' => '#gender = :gender',
+        //     'ExpressionAttributeNames'=> [ '#gender' => 'gender' ],
+        //     'ExpressionAttributeValues'=> [
+        //          ':gender' => [
+        //              'S' => 'M',
+        //             ],
+        //         ],
+        // ];
+
+        // // echo "Querying for movies from 1985.\n";
+
+        // try {
+        //     $result = $dynamodb->scan($params);
+
+        //     echo "Query succeeded.\n";
+
+        //     foreach ($result['Items'] as $user) {
+        //         echo $marshaler->unmarshalValue($user['username']) . ': ' .
+        //             $marshaler->unmarshalValue($user['fullname']) . "\n";
+        //     }
+
+        // } catch (DynamoDbException $e) {
+        //     echo "Unable to query:\n";
+        //     echo $e->getMessage() . "\n";
+        // }
+    }
 }
