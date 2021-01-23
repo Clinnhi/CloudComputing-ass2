@@ -40,6 +40,23 @@ $website_two = $userDetails['website2']['S'];
 $website_three = $userDetails['website3']['S'];
 
 
+
+// CRYPTO API
+$url = "https://www.coinspot.com.au/pubapi/latest"; 
+$getContent = file_get_contents($url);   
+$json = json_decode($getContent, true);   
+
+
+ // Check if the form is submitted 
+ if ( isset( $_GET['submit'] ) ) { 
+ // retrieve the form data by using the element's name attributes value as key 
+ $crypto_one = $_POST['crypto-one']; 
+ $crypto_two = $_POST['crypto-two']; // display the results 
+ $crypto_three = $_POST['crypto-three'];
+}
+
+
+
 // // About Me
 // $full_name = $_POST['full-name'];
 // $email = $_POST['email'];
@@ -247,14 +264,15 @@ $website_three = $userDetails['website3']['S'];
       </section>
 
 
-      <!-- FAVOURITE WEBSITES -->
+      <!-- FAVOURITE CRYPTO -->
       <section id="links">
         <h1>My Three Favourite Cryptocurrencies</h1>
         <div class="row">
           <div class="col-md-4">
-            Cryptocurrency One
+            Cryptocurrency One:
             <!-- Sample PHP API - Code to retrieve btc price -->
-            <div><?php include 'crypto-sample.php' ?></div>
+            <?php echo $crypto_one ?>
+            <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . $json['prices'][$crypto_one]["last"] . '<br>'; ?>
 
             <!-- API TO RETRIEVE PRICE -->
           </div>
@@ -262,15 +280,13 @@ $website_three = $userDetails['website3']['S'];
           <div class="col-md-4">
             Cryptocurrency Two:
             <?php echo $crypto_two ?>
-            <div>Price:</div>
-            <!-- API TO RETRIEVE PRICE -->
+            <?php   echo '<br> Price for ' . $crypto_two . ' is:  $' . $json['prices'][$crypto_two]["last"] . '<br>'; ?>
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Three:
             <?php echo $crypto_three ?>
-            <div>Price: </div>
-            <!-- API TO RETRIEVE PRICE -->
+            <?php   echo '<br> Price for ' . $crypto_three . ' is:  $' . $json['prices'][$crypto_three]["last"] . '<br>'; ?>
 
           </div>
         </div>
