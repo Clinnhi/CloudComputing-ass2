@@ -40,11 +40,16 @@ class S3Functions
     /** Function for updating a user's profile picture */
     public function updateProfilePicture($username, $file_upload) {
         try{
+            $result = $this->s3Client->deleteObject([
+                'Bucket' => 'imagesfblite',
+                'Key'    => 'profile/' . $username
+            ]);
+
             $uploader = new MultipartUploader($this->s3Client, fopen($file_upload, 'rb'), [
                 'bucket' => 'imagesfblite',
                 'key'    => 'profile/' . $username
             ]);
-            $result = $uploader->upload();
+            $result1 = $uploader->upload();
         } catch(Exception $e) {
 
         }

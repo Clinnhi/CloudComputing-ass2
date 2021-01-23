@@ -251,6 +251,63 @@ class DynamoDBFunctions
         }
     }
 
+    /** Delete friend request function */
+    public function DeleteFriendRequest($username, $targetname)
+    {
+        $tableName = 'FriendRequest';
+
+        $json = json_encode([
+            'username' => $username,
+            'targetname' => $targetname
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->deleteItem($params);
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** friend request sent function - checks if user already sent a friend request to target */
+    public function FriendRequestSent($username, $targetname)
+    {
+        $tableName = 'FriendRequest';
+
+        $json = json_encode([
+            'username' => $username,
+            'targetname' => $targetname
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->getItem($params);
+            $array = $result["Item"];
+
+            if (!empty($array)) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+
+        return true;
+    }
+
     /** Accept friend request function */
     public function AcceptFriendRequest($username, $targetname, $accept)
     {
@@ -315,7 +372,6 @@ class DynamoDBFunctions
     /** isFriend function - Check if you are friends with target user */
     public function isFriend($username, $targetname)
     {
-        // 1. delete the friend request
         $tableName = 'FriendList';
 
         $json = json_encode([
@@ -379,6 +435,37 @@ class DynamoDBFunctions
         }
     }
 
+    /** FriendRequestList function - Returns an array of a user's friends */
+    public function FriendRequestList($username)
+    {
+        $tableName = 'FriendRequest';
+
+        $params = [
+            'TableName' => $tableName,
+            'FilterExpression' => '#targetname = :targetname',
+            'ExpressionAttributeNames' => ['#targetname' => 'targetname'],
+            'ExpressionAttributeValues' => [
+                ':targetname' => [
+                    'S' => $username,
+                ],
+            ],
+        ];
+
+        try {
+            $result = $this->dynamodb->scan($params);
+
+            return $result['Items'];
+
+            // foreach ($result['Items'] as $user) {
+            //     echo $this->marshaler->unmarshalValue($user['username']) . ': ' .
+            //         $this->marshaler->unmarshalValue($user['fullname']) . "\n";
+            // }
+
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
     /** SearchUser function - returns search result of user list */
     public function SearchUser($input_name)
     {
@@ -398,19 +485,17 @@ class DynamoDBFunctions
                 if ($input_name) {
 
                     $string = $user['fullname']['S'];
-                    
+
                     $result = stripos($string, $input_name);
                     // $log .= '(' . $user['fullname']['S'] . 'vs' . $input_name . ')';
                     // $log .= $result;
                     if (strlen($result) > 0) {
                         $log .= "1";
                         array_push($user_array, $user);
-                    }
-                    else {
+                    } else {
                         $log .= "2";
                     }
-                }
-                else {
+                } else {
                     $log .= "3";
                     array_push($user_array, $user);
                 }
@@ -421,33 +506,5 @@ class DynamoDBFunctions
         } catch (DynamoDbException $e) {
             return false;
         }
-
-        //         $params = [
-        //     'TableName' => $tableName,
-        //     'FilterExpression' => '#gender = :gender',
-        //     'ExpressionAttributeNames'=> [ '#gender' => 'gender' ],
-        //     'ExpressionAttributeValues'=> [
-        //          ':gender' => [
-        //              'S' => 'M',
-        //             ],
-        //         ],
-        // ];
-
-        // // echo "Querying for movies from 1985.\n";
-
-        // try {
-        //     $result = $dynamodb->scan($params);
-
-        //     echo "Query succeeded.\n";
-
-        //     foreach ($result['Items'] as $user) {
-        //         echo $marshaler->unmarshalValue($user['username']) . ': ' .
-        //             $marshaler->unmarshalValue($user['fullname']) . "\n";
-        //     }
-
-        // } catch (DynamoDbException $e) {
-        //     echo "Unable to query:\n";
-        //     echo $e->getMessage() . "\n";
-        // }
     }
 }

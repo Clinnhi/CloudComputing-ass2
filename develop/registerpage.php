@@ -20,11 +20,9 @@ if (!empty($_POST['username'])) {
         $register_error_message = 'Some fields is empty';
     } else {
         if ($app->Register($username, $fullname, $password, $email)) {
-            $_SESSION['username'] = $username;
-            $_SESSION["loggedIn"] = true;
             $register_success_message = 'Successfully registered!';
         } else {
-            $register_error_message = 'Invalid username or password. Please try again.';
+            $register_error_message = 'Username is taken. Please try a different one.';
         }
     }
 }
@@ -42,20 +40,20 @@ if (!empty($_POST['username'])) {
         <h1 style=".center; color: #c9b0d4;font-family: sans-serif"> <u>Register Page</u></h1>
         <?php
         if ($register_error_message != "") {
-            echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $register_error_message . '</div>';
+            echo '<div style="color:white;" class="alert alert-danger"><strong>Error: </strong> ' . $register_error_message . '<br></div>';
         }
         if ($register_success_message != "") {
-            echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $register_success_message . '</div>';
+            echo '<div style="color:white;" class="alert alert-danger"><strong>Success: </strong> ' . $register_success_message . '<br></div>';
         }
         ?>
-        <form name="registration" action="" method="post">
+        <form style="width:30%;" name="registration" action="" method="post">
             <input type="text" name="fullname" placeholder="Full Name" required />
             <input type="text" name="username" placeholder="Username" required />
             <input type="email" name="email" placeholder="Email" required />
             <input type="password" name="password" placeholder="Password" required />
             <input type="submit" name="submit" value="Register" />
         </form>
-        <a href='loginpage.html'>Not registered yet? Register Here</a>
+        <a style="color:white;" href='loginpage.php'>Already resgistered? Login here</a>
 
 
     </div>

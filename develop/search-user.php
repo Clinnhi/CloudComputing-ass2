@@ -1,4 +1,6 @@
 <?php
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 require 'functions/dynamodb_functions.php';
 require 'functions/s3_functions.php';
 
@@ -13,15 +15,6 @@ if (!empty($_POST['name'])) {
 } else {
     $data = $app->SearchUser("");
 }
-
-
-
-
-// var_dump($data);
-
-// foreach ($data as $i) {
-//     echo $i;
-// }
 ?>
 
 <!DOCTYPE html>
@@ -39,7 +32,6 @@ if (!empty($_POST['name'])) {
 
     <h1>Search Friends</h1>
     <form action="search-user.php" method="post">
-        <!-- <input type="text" name="name" placeholder="Search Here..." id="searchBox" oninput="search(this.value)"> -->
         <input type="text" name="name" placeholder="Search Here..." id="searchBox">
         <button type="submit" class="btn btn-primary btn-block btn-large">Search</button>
 
