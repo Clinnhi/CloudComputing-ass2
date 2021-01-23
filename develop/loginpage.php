@@ -67,8 +67,8 @@ if (!empty($_POST['username'])) {
             <input type="password" name="password" placeholder="Password" required="required" />
             <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
         </form>
-
-        <a href='registration.html'>Not registered yet? Register Here</a>
+        <br>
+        <a style="color:white;" href='registerpage.php'>Not registered yet? Register Here</a>
 
     </div>
 

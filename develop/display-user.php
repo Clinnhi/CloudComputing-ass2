@@ -1,4 +1,6 @@
 <?php
+header("Cache-Control: no-cache, must-revalidate");
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 // Start Session
 session_start();
 
@@ -11,11 +13,10 @@ $target_username = "";
 
 if (empty($_GET['user'])) {
     $target_username = $_SESSION['username'];
-    echo 'EMPTY';
+    // echo 'EMPTY';
 }
 else {
     $target_username = $_GET['user'];
-    echo $_GET['user'];
 }
 
 $userDetails = $app->UserDetails($target_username);
@@ -107,6 +108,8 @@ $website_three = $userDetails['website3']['S'];
           <li><a href="#news-feed">News Feed</a></li>
           <li><a href="update-profile.php">Update Profile</a></li>
           <li><a href="#contact-me">Contact Me</a></li>
+          <li><a href="friend-request-list.php">Friend Requests</a></li>
+          <li><a href="logout.php">Logout</a></li>
         </ul>
 
            <form class="form-inline">
@@ -139,13 +142,31 @@ $website_three = $userDetails['website3']['S'];
 
         <!-- CONNECT WITH ME BUTTON -->
         <!-- <form method="post"> -->
+        
         <div>   
-          <button id="primary">Connect With Me!</button>
-        </div>
-        <script src="javascript/connect-button.js"></script>
-        <?php include 'connect-with-me.php' ?> 
-        <!-- </form> -->
+            <?php // 1. If user is friends with target user, display connected button
+                if ($app->isFriend($_SESSION['username'], $target_username)) { ?>
+                    <button id="primary" type="button" disabled>Connected</button>
+            <?php } ?>
 
+            <?php // 2. If user sent a friend request to target user, display connect request sent button
+                if ($app->FriendRequestSent($_SESSION['username'], $target_username)) { ?>
+                    <form action="delete-connect-request.php" method="post"> 
+                        <input type="hidden" name="targetname" value=<?php echo $target_username ?>>
+                        <button id="primary">Connect request sent, click to undo</button>
+                    </form>
+            <?php } ?>
+
+            <?php // 3. If user is neither friend nor sent friend request and target user is not user, display connect button
+                if (!$app->isFriend($_SESSION['username'], $target_username) && !$app->FriendRequestSent($_SESSION['username'], $target_username) && $target_username != $_SESSION['username']) { ?>
+                    <form action="connect-with-me.php" method="post"> 
+                        <input type="hidden" name="targetname" value=<?php echo $target_username ?>>
+                        <button id="primary">Connect with me</button>
+                    </form>
+            <?php } ?>
+        </div>
+        <!-- </form> -->
+        
       </section>
 
 
@@ -154,7 +175,7 @@ $website_three = $userDetails['website3']['S'];
         <img src=<?php echo $userImage; ?> style="width:200px;height:200px;">
         <?php
         if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-            $s3->updateProfilePicture($username, $_FILES['userfile']['tmp_name']);
+            $s3->updateProfilePicture($target_username, $_FILES['userfile']['tmp_name']);
         } 
         ?>
         <h4>Update profile image</h4>
