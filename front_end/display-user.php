@@ -27,7 +27,20 @@ $website_three = $_POST['website-three-url'];
 $photo_name = $_POST['photo_name'];
 
 
+// CRYPTO API
 
+$url = "https://www.coinspot.com.au/pubapi/latest"; 
+$getContent = file_get_contents($url);   
+$json = json_decode($getContent, true);   
+
+
+ // Check if the form is submitted 
+ if ( isset( $_GET['submit'] ) ) { 
+ // retrieve the form data by using the element's name attributes value as key 
+ $crypto_one = $_POST['crypto-one']; 
+ $crypto_two = $_POST['crypto-two']; // display the results 
+ $crypto_three = $_POST['crypto-three'];
+}
 // echo "Full Name: " . $full_name . "<br>";
 // echo "Email: " . $email . "<br>";
 // echo "About Me: " . $about_me . "<br>";
@@ -186,9 +199,10 @@ $photo_name = $_POST['photo_name'];
         <h1>My Three Favourite Cryptocurrencies</h1>
         <div class="row">
           <div class="col-md-4">
-            Cryptocurrency One
+            Cryptocurrency One:
             <!-- Sample PHP API - Code to retrieve btc price -->
-            <div><?php include 'crypto-sample.php' ?></div>
+            <?php echo $crypto_one ?>
+            <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . $json['prices'][$crypto_one]["last"] . '<br>'; ?>
 
             <!-- API TO RETRIEVE PRICE -->
           </div>
@@ -196,15 +210,13 @@ $photo_name = $_POST['photo_name'];
           <div class="col-md-4">
             Cryptocurrency Two:
             <?php echo $crypto_two ?>
-            <div>Price:</div>
-            <!-- API TO RETRIEVE PRICE -->
+            <?php   echo '<br> Price for ' . $crypto_two . ' is:  $' . $json['prices'][$crypto_two]["last"] . '<br>'; ?>
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Three:
             <?php echo $crypto_three ?>
-            <div>Price: </div>
-            <!-- API TO RETRIEVE PRICE -->
+            <?php   echo '<br> Price for ' . $crypto_three . ' is:  $' . $json['prices'][$crypto_three]["last"] . '<br>'; ?>
 
           </div>
         </div>

@@ -43,10 +43,11 @@
 
     <!-- FAV CRYPTOS -->
     <div class="panel-heading"><h1 class="panel-title">Enter Your Three Favourite Crypto</h1></div>
+
     Crypto One:  <input type="text" name="crypto-one" /><br />
     Crypto Two:  <input type="text" name="crypto-two" /><br />
     Crypto Three:  <input type="text" name="crypto-three" /><br />
-
+    
     <br>
 
     <!-- UPLOAD PHOTOS -->
