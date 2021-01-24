@@ -194,7 +194,7 @@ $json = json_decode($getContent, true);
       </section>
 
 
-      <!-- FAVOURITE WEBSITES -->
+      <!-- FAVOURITE CRYPTOS -->
       <section id="links">
         <h1>My Three Favourite Cryptocurrencies</h1>
         <div class="row">
@@ -203,8 +203,6 @@ $json = json_decode($getContent, true);
             <!-- Sample PHP API - Code to retrieve btc price -->
             <?php echo strtoupper('$'. $crypto_one) ?>
             <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>'; ?>
-
-            <!-- API TO RETRIEVE PRICE -->
           </div>
 
           <div class="col-md-4">

@@ -84,13 +84,46 @@ if (!empty($_POST['fullname'])) {
 
                 <!-- FAV CRYPTOS -->
                 <div class="panel-heading">
-                    <h1 class="panel-title">Enter Your Three Favourite Crypto</h1>
+                    <h1 class="panel-title">Select Your Three Favourite Cryptocurrencies</h1>
                 </div>
-                Crypto One: <input type="text" name="crypto-one" /><br />
-                Crypto Two: <input type="text" name="crypto-two" /><br />
-                Crypto Three: <input type="text" name="crypto-three" /><br />
-
+                <label>Crypto One:</label>
+                <select name="crypto-one" id="crypto-one">
+                    <option value="-">-</option>
+                    <option value="btc">Bitcoin</option>
+                    <option value="eth">Ethereum</option>
+                    <option value="ltc">Litecoin</option>
+                    <option value="xrp">Ripple</option>
+                    <option value="powr">Power Ledger</option>
+                    <option value="trx">Tron</option>
+                    <option value="eos">EOS</option>
+                </select>
                 <br><br>
+
+              <label>Crypto Two:</label>
+              <select name="crypto-two" id="crypto-two">
+                  <option value="-">-</option>
+                  <option value="btc">Bitcoin</option>
+                  <option value="eth">Ethereum</option>
+                  <option value="ltc">Litecoin</option>
+                  <option value="xrp">Ripple</option>
+                  <option value="powr">Power Ledger</option>
+                  <option value="trx">Tron</option>
+                  <option value="eos">EOS</option>
+              </select>
+              <br><br>
+
+              <label>Crypto Three:</label>
+              <select name="crypto-three" id="crypto-three">
+                  <option value="-">-</option>
+                  <option value="btc">Bitcoin</option>
+                  <option value="eth">Ethereum</option>
+                  <option value="ltc">Litecoin</option>
+                  <option value="xrp">Ripple</option>
+                  <option value="powr">Power Ledger</option>
+                  <option value="trx">Tron</option>
+                  <option value="eos">EOS</option> 
+              </select>
+              <br><br>
 
                 <!-- UPLOAD PHOTOS -->
                 <div class="panel-heading">
