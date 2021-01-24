@@ -201,21 +201,38 @@ $json = json_decode($getContent, true);
           <div class="col-md-4">
             Cryptocurrency One:
             <!-- Sample PHP API - Code to retrieve btc price -->
-            <?php echo strtoupper('$'. $crypto_one) ?>
-            <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>'; ?>
+            <?php if ($crypto_one != '-'){
+              echo strtoupper('$'. $crypto_one);
+              echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>';
+          }
+            else{
+              echo 'No crypto selected';
+            }
+             ?>
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Two:
-            <?php echo strtoupper('$' . $crypto_two) ?>
-            <?php   echo '<br> Price for ' . $crypto_two . ' is:  $' . round($json['prices'][$crypto_two]["last"], 2) . '<br>'; ?>
+            <?php if ($crypto_two != '-'){
+              echo strtoupper('$'. $crypto_two);
+              echo '<br> Price for ' . $crypto_two . ' is:  $' . round($json['prices'][$crypto_two]["last"], 2) . '<br>';
+          }
+            else{
+              echo 'No crypto selected';
+            }
+             ?>
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Three:
-            <?php echo strtoupper('$' . $crypto_three) ?>
-            <?php   echo '<br> Price for ' . $crypto_three . ' is:  $' . round($json['prices'][$crypto_three]["last"], 2) . '<br>'; ?>
-
+            <?php if ($crypto_three != '-'){
+              echo strtoupper('$'. $crypto_three);
+              echo '<br> Price for ' . $crypto_three . ' is:  $' . round($json['prices'][$crypto_three]["last"], 2) . '<br>';
+          }
+            else{
+              echo 'No crypto selected';
+            }
+             ?>
           </div>
         </div>
       </section>
