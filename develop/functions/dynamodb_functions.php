@@ -562,6 +562,31 @@ class DynamoDBFunctions
         }
     }
 
+    /** Delete post function */
+    public function DeletePost($username, $timestamp)
+    {
+        $tableName = 'Posts';
+
+        $json = json_encode([
+            'username' => $username,
+            'timestamp' => intval($timestamp)
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->deleteItem($params);
+            return $result;
+        } catch (DynamoDbException $e) {
+            return $e;
+        }
+    }
+
     /** Fetch user post function - fetch all posts from the target user */
     public function FetchUserPosts($targetname)
     {

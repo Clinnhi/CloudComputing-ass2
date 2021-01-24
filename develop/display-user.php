@@ -159,6 +159,7 @@ if (isset($_GET['submit'])) {
                 <?php 
                 if ($target_username == $_SESSION['username']) {
                     echo '<h2>Your profile page.</h2>';
+                    echo '<button onclick="location.href=\'post/new-post.php\'">Write a new post</button>';
                 }
                 else {
                     echo '<h2> Welcome To ' . $full_name . '\'s Profile Page. </br></h2>';
@@ -329,8 +330,13 @@ if (isset($_GET['submit'])) {
                     <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
                     <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
                     <?php if ($post['imageURL']['S'] != '-') { 
-                        echo '<img src=' . $s3->getPostPictureLink($post['imageURL']['S']) . ' style="width:600px;height:400px;">';
+                        echo '<img src=' . $s3->getPostPictureLink($post['imageURL']['S']) . ' style="width:600px;height:400px; margin-bottom:10px;">';
                     } ?>
+                    <form action="post/delete-post.php" method="post">
+                        <input type="hidden" name="timestamp" value=<?php echo $post['timestamp']['N'] ?>>
+                        <input type="hidden" name="username" value=<?php echo $target_username ?>>
+                        <button style="border-color: red; color:red;" id="primary">Delete Post</button>
+                    </form>
                 </div>
                 <br>
 

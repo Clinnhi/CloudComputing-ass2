@@ -6,7 +6,7 @@ $app = new DynamoDBFunctions();
 if(isset($_POST["targetname"]))
 {
     $result = $app->AcceptFriendRequest($_SESSION['username'], $_POST["targetname"], false);
-    header("Location: connect-request-list.php");
-
 }
+
+header("Location: connect-request-list.php");
 ?>

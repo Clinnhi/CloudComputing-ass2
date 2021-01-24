@@ -47,11 +47,13 @@ class S3Functions
     /** Function for updating a user's profile picture */
     public function updateProfilePicture($username, $file_upload) {
         try{
+            // delete old profile image
             $result = $this->s3Client->deleteObject([
                 'Bucket' => 'imagesfblite',
                 'Key'    => 'profile/' . $username
             ]);
 
+            // upload new profile image
             $uploader = new MultipartUploader($this->s3Client, fopen($file_upload, 'rb'), [
                 'bucket' => 'imagesfblite',
                 'key'    => 'profile/' . $username
@@ -60,8 +62,41 @@ class S3Functions
         } catch(Exception $e) {
 
         }
-        
     }
 
+    /** Function for uploading a user's post's picture */
+    public function uploadPostPicture($username, $file_upload, $timestamp) {
+        try{
+            // try deleting an existing file with same name just to prevent errors
+            $result = $this->s3Client->deleteObject([
+                'Bucket' => 'imagesfblite',
+                'Key'    => 'post/' . $username . $timestamp
+            ]);
+
+            // uploading image
+            $uploader = new MultipartUploader($this->s3Client, fopen($file_upload, 'rb'), [
+                'bucket' => 'imagesfblite',
+                'key'    => 'post/' . $username . $timestamp
+            ]);
+            $result1 = $uploader->upload();
+        } catch(Exception $e) {
+
+        }
+    }
+
+    /** Function for deleting a user's post's picture */
+    public function deletePostPicture($username, $timestamp) {
+        try{
+            // try deleting an existing file with same name just to prevent errors
+            $result = $this->s3Client->deleteObject([
+                'Bucket' => 'imagesfblite',
+                'Key'    => 'post/' . $username . $timestamp
+            ]);
+
+            return $result;
+        } catch(Exception $e) {
+            return $e;
+        }
+    }
 
 }

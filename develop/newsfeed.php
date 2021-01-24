@@ -69,7 +69,8 @@ $posts = $app->FetchAllFriendsPosts($_SESSION['username']);
 
         <section id="greetings" class="jumbotron">
             <span class="center">
-                <p> News Feed </br></p>
+                <h2> News Feed </br></h2>
+                <button onclick="location.href='post/new-post.php'">Write a new post</button>
             </span>
         </section>
 

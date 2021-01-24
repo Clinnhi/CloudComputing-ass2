@@ -2,9 +2,10 @@
 // Start Session
 session_start();
 
-// Load the function class
-require 'functions/dynamodb_functions.php';
+require '../functions/dynamodb_functions.php';
+require '../functions/s3_functions.php';
 $app = new DynamoDBFunctions();
+$s3 = new S3Functions();
 
 $post_error_message = '';
 $post_success_message = '';
@@ -12,19 +13,22 @@ $post_success_message = '';
 
 $username = $_SESSION['username'];
 
-// check update request
-if (!empty($_POST['content'])) {
-    $content = trim($_POST['content']);
-    $imageURL = trim($_POST['content']);
-
-    $result = $app->
-
-    if ($result) {
-        $update_success_message = 'Details successfully updated';
-    } else {
-        $update_error_message = 'Invalid details. Please try again';
+// Write post POST request
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $timestamp = time(); // get timestamp
+    // Check if user uploaded an image
+    if (isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
+        $app->CreatePost($username, $_POST['content'], $username . $timestamp);
+        $s3->uploadPostPicture($username, $_FILES['userfile']['tmp_name'], $timestamp);
+        $post_success_message = 'Post successfully made!';
+    }
+    // else if no image uploaded
+    else {
+        $app->CreatePost($username, $_POST['content'], '-');
+        $post_success_message = 'Post successfully made!';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -82,20 +86,19 @@ if (!empty($_POST['content'])) {
             echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $post_error_message . '</div>';
         }
         if ($post_success_message != "") {
-            echo '<div class="alert alert-success"><strong>Error: </strong> ' . $post_success_message . '</div>';
+            echo '<div class="alert alert-success"><strong>Success: </strong> ' . $post_success_message . '</div>';
         }
         ?>
-
-        <form action="new-post.php" method="post">
+        <div>
             <h2>Write a new post</h2>
+            <form enctype="multipart/form-data" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+                <textarea name="content" placeholder="Write something..." required="required"></textarea>
+                <input name="userfile" type="file"><input type="submit" value="Upload">
+                <br>
+                <button type="submit" class="btn btn-primary btn-block btn-large" style="width:150px;">Post</button>
+            </form>
+        </div>
 
-            <label name="content" class="col-sm-3 control-label">Content <span class="asterisk">*</span></label>
-            <div class="col-sm-9"><textarea name="content" placeholder="Write something..." required="required"></textarea></div>
-            <h4>Image</h4>
-            <input name="userfile" type="file"><input type="submit" value="Upload">
-            
-            <button type="submit" class="btn btn-primary btn-block btn-large" style="width:150px;">Update Profile</button>
-        </form>
 </body>
 
 </html>
