@@ -125,7 +125,7 @@ $json = json_decode($getContent, true);
           <li><a href="#news-feed">News Feed</a></li>
           <li><a href="update-profile.php">Update Profile</a></li>
           <li><a href="#contact-me">Contact Me</a></li>
-          <li><a href="friend-request-list.php">Friend Requests</a></li>
+          <li><a href="connect-request-list.php">Connect Requests</a></li>
           <li><a href="logout.php">Logout</a></li>
         </ul>
 
@@ -142,7 +142,7 @@ $json = json_decode($getContent, true);
              <!-- SEARCH USERNAME -->
            <form action="display-user.php" method="get" name="form"> 
             <span class="right_header"> 
-              <a href="search-user.php"><button type="button" class="btn btn-primary btn-lg">Search Profile</button>
+              <a href="search-user.php"><button type="button" class="btn btn-primary btn-lg">Find Friends</button>
               </a>
             </span>
           </form>

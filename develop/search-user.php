@@ -1,6 +1,7 @@
 <?php
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+session_start();
 require 'functions/dynamodb_functions.php';
 require 'functions/s3_functions.php';
 
@@ -30,6 +31,7 @@ if (!empty($_POST['name'])) {
 
 <body>
 
+
     <h1>Search Friends</h1>
     <form action="search-user.php" method="post">
         <input type="text" name="name" placeholder="Search Here..." id="searchBox">
@@ -42,14 +44,16 @@ if (!empty($_POST['name'])) {
         echo "Showing search results for \"" . $search_results . "\"<br><br>";
     }
     ?>
-    
+
     <ul id="dataViewer">
         <?php echo "<table>";
         foreach ($data as $user) {
             $fullname = $user['fullname']['S'];
             $username = $user['username']['S'];
-            $userImage = $s3->getProfilePictureLink($username);
-            echo "<tr><td><li><img src=" . $userImage . " style=\"width:50px;height:50px;\"><a style=\"color:white;\" href=\"display-user.php?user=" . $username . "\">" . $fullname . "</a></td></tr></li>";
+            if ($username != $_SESSION['username']) {
+                $userImage = $s3->getProfilePictureLink($username);
+                echo "<tr><td><li><img src=" . $userImage . " style=\"width:50px;height:50px;\"><a style=\"color:white;\" href=\"display-user.php?user=" . $username . "\">" . $fullname . " (" . $username . ")" . "</a></td></tr></li>";
+            }
         }
         echo "</table>"; ?>
     </ul>

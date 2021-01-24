@@ -315,8 +315,8 @@ class DynamoDBFunctions
         $tableName = 'FriendRequest';
 
         $json = json_encode([
-            'username' => $username,
-            'targetname' => $targetname
+            'username' => $targetname,
+            'targetname' => $username
         ]);
 
         $key = $this->marshaler->marshalJson($json);
