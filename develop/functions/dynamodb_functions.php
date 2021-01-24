@@ -275,6 +275,30 @@ class DynamoDBFunctions
         }
     }
 
+    /** Delete friend function */
+    public function DeleteFriend($username, $targetname)
+    {
+        $tableName = 'FriendList';
+
+        $json = json_encode([
+            'username' => $username,
+            'friendname' => $targetname
+        ]);
+
+        $key = $this->marshaler->marshalJson($json);
+
+        $params = [
+            'TableName' => $tableName,
+            'Key' => $key
+        ];
+
+        try {
+            $result = $this->dynamodb->deleteItem($params);
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
     /** friend request sent function - checks if user already sent a friend request to target */
     public function FriendRequestSent($username, $targetname)
     {
