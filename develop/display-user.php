@@ -216,6 +216,9 @@ if (isset($_GET['submit'])) {
                     <!-- RETRIEVE ABOUT ME -->
                     <h2>Email</h2>
                     <p><?php echo $email ?></p>
+                    <br>
+                    <h2>About Me</h2>
+                    <p><?php echo $about_me ?></p>
 
                 </div>
                 <!--  <div class="col-md-4">
