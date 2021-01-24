@@ -35,7 +35,7 @@ $json = json_decode($getContent, true);
 
 
  // Check if the form is submitted 
- if ( isset( $_GET['submit'] ) ) { 
+ if ( isset( $_POST['submit'] ) ) { 
  // retrieve the form data by using the element's name attributes value as key 
  $crypto_one = $_POST['crypto-one']; 
  $crypto_two = $_POST['crypto-two']; // display the results 
@@ -201,22 +201,22 @@ $json = json_decode($getContent, true);
           <div class="col-md-4">
             Cryptocurrency One:
             <!-- Sample PHP API - Code to retrieve btc price -->
-            <?php echo $crypto_one ?>
-            <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . $json['prices'][$crypto_one]["last"] . '<br>'; ?>
+            <?php echo strtoupper('$'. $crypto_one) ?>
+            <?php   echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>'; ?>
 
             <!-- API TO RETRIEVE PRICE -->
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Two:
-            <?php echo $crypto_two ?>
-            <?php   echo '<br> Price for ' . $crypto_two . ' is:  $' . $json['prices'][$crypto_two]["last"] . '<br>'; ?>
+            <?php echo strtoupper('$' . $crypto_two) ?>
+            <?php   echo '<br> Price for ' . $crypto_two . ' is:  $' . round($json['prices'][$crypto_two]["last"], 2) . '<br>'; ?>
           </div>
 
           <div class="col-md-4">
             Cryptocurrency Three:
-            <?php echo $crypto_three ?>
-            <?php   echo '<br> Price for ' . $crypto_three . ' is:  $' . $json['prices'][$crypto_three]["last"] . '<br>'; ?>
+            <?php echo strtoupper('$' . $crypto_three) ?>
+            <?php   echo '<br> Price for ' . $crypto_three . ' is:  $' . round($json['prices'][$crypto_three]["last"], 2) . '<br>'; ?>
 
           </div>
         </div>
