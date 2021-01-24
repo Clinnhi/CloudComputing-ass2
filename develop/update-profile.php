@@ -80,7 +80,7 @@ if (!empty($_POST['fullname'])) {
     <div class="container">
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
-                <li><a href="#news-feed">News Feed</a></li>
+                <li><a href="newsfeed.php">News Feed</a></li>
                 <li><a href="display-user.php">My Profile</a></li>
                 <li><a href="update-profile.php">Update Profile</a></li>
                 <li><a href="connect/connect-list.php">Connected Friends</a></li>

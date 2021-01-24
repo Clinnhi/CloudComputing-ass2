@@ -22,8 +22,9 @@ class S3Functions
             ]
         ]);
 
-        // S3 BUCKET URL
-        $this->url = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/profile/';
+        // S3 BUCKET URLS
+        $this->profileUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/profile/';
+        $this->postUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/post/';
     }
 
     function __destruct()
@@ -34,7 +35,13 @@ class S3Functions
     /** Function for getting the link of a user's profile picture */
     public function getProfilePictureLink($username)
     {
-        return $this->url . $username;
+        return $this->profileUrl . $username;
+    }
+
+    /** Function for getting the link of a post picture */
+    public function getPostPictureLink($imageURL)
+    {
+        return $this->postUrl . $imageURL;
     }
 
     /** Function for updating a user's profile picture */
@@ -55,4 +62,6 @@ class S3Functions
         }
         
     }
+
+
 }

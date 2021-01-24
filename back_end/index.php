@@ -211,7 +211,7 @@ $marshaler = new Marshaler();
 
 /** WORKING CODE FOR CREATING TABLES */
 // $params = [
-//     'TableName' => 'FriendRequest',
+//     'TableName' => 'Posts',
 //     'KeySchema' => [
 //         // [
 //         //     'AttributeName' => 'user_id',
@@ -221,15 +221,11 @@ $marshaler = new Marshaler();
 //             'AttributeName' => 'username',
 //             'KeyType' => 'HASH' //Partition key
 //         ],
-//         [
-//             'AttributeName' => 'targetname',
-//             'KeyType' => 'RANGE' //Sort key
-//         ],
         
-//         // [
-//         //     'AttributeName' => 'password',
-//         //     'KeyType' => 'RANGE'  //Sort key
-//         // ],
+//         [
+//             'AttributeName' => 'timestamp',
+//             'KeyType' => 'RANGE'  //Sort key
+//         ],
 //     ],
 //     'AttributeDefinitions' => [
 //         // [
@@ -241,13 +237,9 @@ $marshaler = new Marshaler();
 //             'AttributeType' => 'S'
 //         ],
 //         [
-//             'AttributeName' => 'targetname',
-//             'AttributeType' => 'S'
+//             'AttributeName' => 'timestamp',
+//             'AttributeType' => 'N'
 //         ],
-//         // [
-//         //     'AttributeName' => 'password',
-//         //     'AttributeType' => 'S'
-//         // ],
 //     ],
 //     'ProvisionedThroughput' => [
 //         'ReadCapacityUnits' => 5,

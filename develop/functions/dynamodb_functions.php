@@ -449,11 +449,6 @@ class DynamoDBFunctions
 
             return $result['Items'];
 
-            // foreach ($result['Items'] as $user) {
-            //     echo $this->marshaler->unmarshalValue($user['username']) . ': ' .
-            //         $this->marshaler->unmarshalValue($user['fullname']) . "\n";
-            // }
-
         } catch (DynamoDbException $e) {
             return false;
         }
@@ -527,6 +522,99 @@ class DynamoDBFunctions
 
             // return $log;
             return $user_array;
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Create post function */
+    public function CreatePost($username, $content, $imageURL)
+    {
+        $tableName = 'Posts';
+
+        //record timestamp
+        $timestamp = time();
+
+        try {
+            // adding user info into dynamodb
+            $json = json_encode([
+                'username' => $username,
+                'timestamp' => $timestamp,
+                'content' => $content,
+                'imageURL' => $imageURL
+            ]);
+
+            $item = $this->marshaler->marshalJson($json);
+
+            $params = [
+                'TableName' => $tableName,
+                'Item' => $item
+            ];
+
+            try {
+                $result = $this->dynamodb->putItem($params);
+                return true;
+            } catch (DynamoDbException $e) {
+                return false;
+            }
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Fetch user post function - fetch all posts from the target user */
+    public function FetchUserPosts($targetname)
+    {
+        $tableName = 'Posts';
+
+        $params = [
+            'TableName' => $tableName
+        ];
+
+        try {
+            $posts = $this->dynamodb->scan($params);
+
+            $filtered_post = array(); // filtered to only fetch friend's posts
+            $log = "";
+
+            foreach ($posts['Items'] as $post) {
+                $log .= 'iterated ';
+                if ($post['username']['S'] == $targetname) {
+                    array_unshift($filtered_post, $post);
+                }
+            }
+
+            // return $log;
+            return $filtered_post;
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Fetch all friend's post function - fetch all posts of users who are friends with the target user */
+    public function FetchAllFriendsPosts($username)
+    {
+        $tableName = 'Posts';
+
+        $params = [
+            'TableName' => $tableName
+        ];
+
+        try {
+            $posts = $this->dynamodb->scan($params);
+
+            $filtered_post = array(); // filtered to only fetch friend's posts
+            $log = "";
+
+            foreach ($posts['Items'] as $post) {
+                $log .= 'iterated ';
+                if ($this->isFriend($username, $post['username']['S'])) {
+                    array_unshift($filtered_post, $post);
+                }
+            }
+
+            // return $log;
+            return $filtered_post;
         } catch (DynamoDbException $e) {
             return false;
         }

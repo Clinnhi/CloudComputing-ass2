@@ -38,7 +38,8 @@ $website_one = $userDetails['website1']['S'];
 $website_two = $userDetails['website2']['S'];
 $website_three = $userDetails['website3']['S'];
 
-
+// Posts
+$user_post = $app->FetchUserPosts($target_username);
 
 // CRYPTO API
 $url = "https://www.coinspot.com.au/pubapi/latest";
@@ -123,7 +124,7 @@ if (isset($_GET['submit'])) {
     <div class="container">
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
-                <li><a href="#news-feed">News Feed</a></li>
+                <li><a href="newsfeed.php">News Feed</a></li>
                 <li><a href="display-user.php">My Profile</a></li>
                 <li><a href="update-profile.php">Update Profile</a></li>
                 <li><a href="connect/connect-list.php">Connected Friends</a></li>
@@ -303,6 +304,30 @@ if (isset($_GET['submit'])) {
 
                 </div>
             </div>
+        </section>
+
+        <!-- USER'S POSTS -->
+        <section id="posts">
+            <h1>My Posts</h1>
+            <?php
+                if (empty($user_post)) {
+                    echo 'You don\'t have any posts yet!';
+                }
+            ?>
+            <?php foreach ($user_post as $post) { ?>
+
+                <div style="border-style: groove;padding: 10px;">
+                    <img src=<?php echo $userImage; ?> style="width:50px;height:50px;"><a href=<?php echo "display-user.php?user=" . $target_username ?>><?php echo $full_name . " (" . $target_username . ")"; ?></a>
+                    
+                    <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
+                    <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
+                    <?php if ($post['imageURL']['S'] != '-') { 
+                        echo '<img src=' . $s3->getPostPictureLink($post['imageURL']['S']) . ' style="width:600px;height:400px;">';
+                    } ?>
+                </div>
+                <br>
+
+            <?php   }   ?>
         </section>
 
 

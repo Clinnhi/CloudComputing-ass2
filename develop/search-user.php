@@ -22,7 +22,7 @@ if (!empty($_POST['name'])) {
 <html>
 
 <head>
-    <title>Search Friends</title>
+    <title>Find Friends</title>
 
     <link rel="stylesheet" type="text/css" href="css/databaseStyle.css ">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -32,7 +32,7 @@ if (!empty($_POST['name'])) {
 <body>
 
 
-    <h1>Search Friends</h1>
+    <h1>Find Friends</h1>
     <form action="search-user.php" method="post">
         <input type="text" name="name" placeholder="Search Here..." id="searchBox">
         <button type="submit" class="btn btn-primary btn-block btn-large">Search</button>
