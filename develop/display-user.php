@@ -156,7 +156,14 @@ if (isset($_GET['submit'])) {
 
         <section id="greetings" class="jumbotron">
             <span class="center">
-                <p> Welcome To <?php echo $full_name ?>'s Profile Page. </br></p>
+                <?php 
+                if ($target_username == $_SESSION['username']) {
+                    echo '<h2>Your profile page.</h2>';
+                }
+                else {
+                    echo '<h2> Welcome To ' . $full_name . '\'s Profile Page. </br></h2>';
+                }
+                ?>
             </span>
 
             <!-- CONNECT WITH ME BUTTON -->
