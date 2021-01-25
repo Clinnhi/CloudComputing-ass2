@@ -8,14 +8,20 @@ use PHPMailer\PHPMailer\Exception;
 // location of your Composer autoload.php file.
 require './vendor/autoload.php';
 
+$sender_name = $_POST['name'];
+$recipient_email = $_POST['email'];
+$message_content = $_POST['message'];
+$subject_title = $_POST['subject'];
+
+
 // Replace sender@example.com with your "From" address.
 // This address must be verified with Amazon SES.
 $sender = 's3605044@student.rmit.edu.au';
-$senderName = 'Cloud Computing Admin';
+$senderName = $sender_name;
 
 // Replace recipient@example.com with a "To" address. If your account
 // is still in the sandbox, this address must be verified.
-$recipient = 'Clintonjob@hotmail.co.uk';
+$recipient = $recipient_email;
 
 // Replace smtp_username with your Amazon SES SMTP user name.
 $usernameSmtp = 'AKIARQCLRSM2USZZJ275';
@@ -34,13 +40,13 @@ $host = 'email-smtp.us-east-1.amazonaws.com';
 $port = 587;
 
 // The subject line of the email
-$subject = 'Important Update!';
+$subject = $subject_title;
 
 // The plain-text body of the email
-$bodyText =  "Testing Email Body";
+// $bodyText =  $message_content;
 
 // The HTML-formatted body of the email
-$bodyHtml = 'Hello, this is a test';
+$bodyHtml = $message_content;
 
 $mail = new PHPMailer(true);
 
