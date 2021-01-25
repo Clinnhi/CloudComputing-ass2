@@ -333,6 +333,25 @@ if (isset($_GET['submit'])) {
             </div>
         </section>
 
+
+        <!-- FAVOURITE WEBSITES -->
+        <section id="links">
+            <h1>My Three Favourite Websites</h1>
+            <div class="row">
+              <div class="col-md-4">
+                <?php echo 'Website One: ' . ucfirst($website_one) ?>
+              </div>
+
+              <div class="col-md-4">
+                <?php echo 'Website One: ' . ucfirst($website_two) ?>
+              </div>
+
+              <div class="col-md-4">
+                <?php echo 'Website One: ' . ucfirst($website_three) ?>
+              </div>
+            </div>
+      </section>
+
         <!-- USER'S POSTS -->
         <section id="posts">
             <h1>My Posts</h1>
