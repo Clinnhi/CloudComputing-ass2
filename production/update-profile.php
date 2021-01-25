@@ -113,23 +113,23 @@ if (!empty($_POST['fullname'])) {
             echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $update_error_message . '</div>';
         }
         if ($update_success_message != "") {
-            echo '<div class="alert alert-success"><strong>Error: </strong> ' . $update_success_message . '</div>';
+            echo '<div class="alert alert-success"><strong>Success: </strong> ' . $update_success_message . '</div>';
         }
         ?>
 
         <form action="update-profile.php" method="post">
             <h1>Personal Info</h1>
             <label name="fullname" class="col-sm-3 control-label">Full Name <span class="asterisk">*</span></label>
-            <div class="col-sm-9"><input type="text" name="fullname" value=<?php echo $fullname ?> required="required" /></div>
+            <div class="col-sm-9"><input type="text" name="fullname" value=<?php echo '"' . $fullname . '"'; ?> required="required" /></div>
 
             <label name="password" class="col-sm-3 control-label">Password <span class="asterisk">*</span></label>
-            <div class="col-sm-9"><input type="password" name="password" value=<?php echo $password ?> required="required" /></div>
+            <div class="col-sm-9"><input type="password" name="password" value=<?php echo '"' . $password . '"'; ?> required="required" /></div>
 
             <label name="email" class="col-sm-3 control-label">Email <span class="asterisk">*</span></label>
-            <div class="col-sm-9"><input type="text" name="email" value=<?php echo $email ?> required="required" /></div>
+            <div class="col-sm-9"><input type="text" name="email" value=<?php echo '"' . $email . '"'; ?> required="required" /></div>
 
             <label name="aboutme" class="col-sm-3 control-label">About Me <span class="asterisk">*</span></label>
-            <div class="col-sm-9"><textarea name="aboutme" required="required"><?php echo $about_me ?></textarea></div>
+            <div class="col-sm-9"><textarea name="aboutme" required="required"><?php echo $about_me; ?></textarea></div>
 
             <h1>Favourite Cryptocurrencies</h1>
             <label>Crypto One:</label>
