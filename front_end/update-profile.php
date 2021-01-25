@@ -45,9 +45,6 @@
 
     <!-- FAV CRYPTOS -->
     <div class="panel-heading"><h1 class="panel-title">Select Your Three Favourite Crypto</h1></div>
-    
-
-    
       <label>Crypto One:</label>
       <select name="crypto-one" id="crypto-one">
           <option value="-">-</option>
