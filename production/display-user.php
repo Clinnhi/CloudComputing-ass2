@@ -179,7 +179,7 @@ if (isset($_GET['submit'])) {
 
                 <?php // 2. If user sent a friend request to target user, display connect request sent button
                 if ($app->FriendRequestSent($_SESSION['username'], $target_username)) { ?>
-                    <form action="delete-connect-request.php" method="post">
+                    <form action="connect/delete-connect-request.php" method="post">
                         <input type="hidden" name="targetname" value=<?php echo $target_username ?>>
                         <button id="primary">Connect request sent, click to undo</button>
                     </form>
@@ -187,7 +187,7 @@ if (isset($_GET['submit'])) {
 
                 <?php // 3. If user is neither friend nor sent friend request and target user is not user, display connect button
                 if (!$app->isFriend($_SESSION['username'], $target_username) && !$app->FriendRequestSent($_SESSION['username'], $target_username) && $target_username != $_SESSION['username']) { ?>
-                    <form action="connect-with-me.php" method="post">
+                    <form action="connect/connect-with-me.php" method="post">
                         <input type="hidden" name="targetname" value=<?php echo $target_username ?>>
                         <button id="primary">Connect with me</button>
                     </form>
