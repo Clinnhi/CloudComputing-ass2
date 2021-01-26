@@ -7,7 +7,25 @@ require '../functions/s3_functions.php';
 $app = new DynamoDBFunctions();
 $s3 = new S3Functions();
 
-$result = $app->FriendList($_SESSION['username']);
+$friends = $app->FriendList($_SESSION['username']);
+
+$no_friend_selected = "";
+$target_friend;
+$target_friend_nametag = "";
+$messages;
+
+if (empty($_GET['user'])) {
+    $no_chat_selected = "Select a friend to start messaging!";
+} else {
+    $friendname = $_GET['user'];
+    $result = $app->UserDetails($friendname);
+    $target_friend = $result[0];
+    $target_friend_nametag = $target_friend['fullname']['S'] . " (" . $target_friend['username']['S'] . ")";
+    $messages = $app->FetchMessages($_SESSION['username'], $friendname);
+}
+
+
+
 ?>
 
 <html>
@@ -15,7 +33,7 @@ $result = $app->FriendList($_SESSION['username']);
 <head>
     <meta charset="UTF-8">
 
-    <title>Connect Request list</title>
+    <title>Messages</title>
 
     <link rel="stylesheet" href="css/about-me.css">
 
@@ -62,39 +80,70 @@ $result = $app->FriendList($_SESSION['username']);
             </form>
         </nav>
 
-        <h1>Connect List</h1>
-        <p>Your list of connected friends</p>
+        <h1>Messages</h1>
 
         <?php
-        if (empty($result)) {
+        if (empty($friends)) {
             echo 'No friends yet. Add some now!';
         }
         ?>
 
-        <?php foreach ($result as $user) {
-            $userDetails = $app->UserDetails($user['friendname']['S']);
-            // var_dump($userDetails);
-            $target_fullname = $userDetails[0]['fullname']['S'];
-            $target_username = $userDetails[0]['username']['S'];
-            $target_userImage = $s3->getProfilePictureLink($target_username);
-        ?>
-            <tr>
-                <td>
-                    <ul>
-                        <form action="delete-connected-friend.php" method="post">
+        <div style="width:20%;float:left;">
+            <?php foreach ($friends as $user) {
+                $userDetails = $app->UserDetails($user['friendname']['S']);
+                // var_dump($userDetails);
+                $target_fullname = $userDetails[0]['fullname']['S'];
+                $target_username = $userDetails[0]['username']['S'];
+                $target_userImage = $s3->getProfilePictureLink($target_username);
+            ?>
+                <tr>
+                    <td>
+                        <ul style="border-style: groove;padding: 10px;">
                             <img src=<?php echo $target_userImage; ?> style="width:50px;height:50px;">
-                            <a href=<?php echo "../display-user.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
-                            <input type="hidden" name="targetname" value=<?php echo $target_username ?>>
-                            <button id="primary">Delete</button>
-                        </form>
+                            <a href=<?php echo "messaging.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
+                        </ul>
+                    </td>
+                </tr>
 
 
-                    </ul>
-                </td>
-            </tr>
+            <?php } ?>
+        </div>
+
+        <div style="width:80%; height:80%; float:right;border-style: groove;padding: 10px;">
+            <?php if ($target_friend) { ?>
+                <h4><?php echo $target_friend_nametag; ?></h4>
+            <?php } ?>
+            <?php if (!$friendname) { ?>
+                <h4><?php echo 'Pick a friend to start a conversation with' ?></h4>
+            <?php } ?>
+            <hr>
+
+            <textarea>
+            <?php
+            if ($messages) {
+                foreach ($messages as $message) {
+                    $userDetails = $app->UserDetails($user['friendname']['S']);
+                    // var_dump($userDetails);
+                    $message_author = $message['author']['S'];
+                    $message_timestamp = $message['timestamp']['N'];
+                    $message_content = $message['content']['S'];
+                    echo $message_content;
+            ?>
+               
+            <?php }
+            } ?>
+            </textarea>
+
+            <form style="width:100%;" name="send-message" action="" method="post">
+                <input type="text" name="fullname" placeholder="Full Name" required />
+                <input type="text" name="username" placeholder="Username" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <input type="password" name="password" placeholder="Password" required />
+                <input type="submit" name="submit" value="Register" />
+            </form>
+        </div>
 
 
-        <?php } ?>
     </div>
 </body>
 

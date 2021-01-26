@@ -644,4 +644,86 @@ class DynamoDBFunctions
             return false;
         }
     }
+
+    /** Fetch messages function - fetch all messages sent between two friends */
+    public function FetchMessages($username, $friendname)
+    {
+        $tableName = 'Messages';
+
+        $friendpair = "";
+
+        // find friendpair
+        if ($username < $friendname) {
+            $friendpair = $username . "-" . $friendname;
+        }
+        else {
+            $friendpair = $friendname . "-" . $username;
+        }
+
+        $params = [
+            'TableName' => $tableName,
+            'KeyConditionExpression' => '#friendpair = :friendpair',
+            'ExpressionAttributeNames' => [
+                '#friendpair' => 'friendpair',
+            ],
+            'ExpressionAttributeValues' => [
+                ':friendpair' => [
+                    'S' => $friendpair,
+                ],
+            ],
+        ];
+
+        try {
+            $result = $this->dynamodb->query($params);
+
+            return $result['Items'];
+
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
+
+    /** Send message function - Sends a message to another friend */
+    public function SendMessage($username, $friendname, $content)
+    {
+        $tableName = 'Messages';
+
+        $friendpair = "";
+
+        // find friendpair
+        if ($username < $friendname) {
+            $friendpair = $username . "-" . $friendname;
+        }
+        else {
+            $friendpair = $friendname . "-" . $username;
+        }
+
+        //record timestamp
+        $timestamp = time();
+
+        try {
+            // adding user info into dynamodb
+            $json = json_encode([
+                'author' => $username,
+                'timestamp' => $timestamp,
+                'content' => $content
+            ]);
+
+            $item = $this->marshaler->marshalJson($json);
+
+            $params = [
+                'TableName' => $tableName,
+                'Item' => $item
+            ];
+
+            try {
+                $result = $this->dynamodb->putItem($params);
+                return true;
+            } catch (DynamoDbException $e) {
+                return false;
+            }
+        } catch (DynamoDbException $e) {
+            return false;
+        }
+    }
 }
