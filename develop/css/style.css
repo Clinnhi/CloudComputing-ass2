@@ -32,6 +32,21 @@ a:hover{
      left: 50%;
      transform: translate(-50%, -50%);
 }
+.chat-box {
+	display:block;
+	background-attachment: fixed;
+	padding-left: 20px;
+	overflow-y: scroll;
+	flex: 1;
+}
+.message-box {
+    /* max-width: 300px; */
+    background: #d2eeff;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 20px 0px;
+    cursor: pointer;
+}
 input[type='text'], input[type='email'],
 input[type='password'] {
      width: 200px;
@@ -56,4 +71,16 @@ input[type='submit']{
 }
 input[type='submit']:hover {
      background-color: f0df74;
+}
+*::-webkit-scrollbar {
+	width: 5px;
+}
+*::-webkit-scrollbar-track {
+	background: #f1f1f1;
+}
+*::-webkit-scrollbar-thumb {
+	background: #aaa;
+}
+*::-webkit-scrollbar-thumb:hover {
+	background: #555;
 }

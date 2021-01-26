@@ -704,8 +704,9 @@ class DynamoDBFunctions
         try {
             // adding user info into dynamodb
             $json = json_encode([
-                'author' => $username,
+                'friendpair' => $friendpair,
                 'timestamp' => $timestamp,
+                'author' => $username,
                 'content' => $content
             ]);
 

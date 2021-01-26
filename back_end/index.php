@@ -210,52 +210,55 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR CREATING TABLES */
-// $params = [
-//     'TableName' => 'Posts',
-//     'KeySchema' => [
-//         // [
-//         //     'AttributeName' => 'user_id',
-//         //     'KeyType' => 'HASH'  //Partition key
-//         // ],
-//         [
-//             'AttributeName' => 'username',
-//             'KeyType' => 'HASH' //Partition key
-//         ],
+$params = [
+    'TableName' => 'Messages',
+    'KeySchema' => [
+        // [
+        //     'AttributeName' => 'user_id',
+        //     'KeyType' => 'HASH'  //Partition key
+        // ],
+        [
+            'AttributeName' => 'friendpair',
+            'KeyType' => 'HASH'  //Partition key
+        ],
+        [
+            'AttributeName' => 'timestamp',
+            'KeyType' => 'RANGE'  // Sort
+        ],
         
-//         [
-//             'AttributeName' => 'timestamp',
-//             'KeyType' => 'RANGE'  //Sort key
-//         ],
-//     ],
-//     'AttributeDefinitions' => [
-//         // [
-//         //     'AttributeName' => 'user_id',
-//         //     'AttributeType' => 'N'
-//         // ],
-//         [
-//             'AttributeName' => 'username',
-//             'AttributeType' => 'S'
-//         ],
-//         [
-//             'AttributeName' => 'timestamp',
-//             'AttributeType' => 'N'
-//         ],
-//     ],
-//     'ProvisionedThroughput' => [
-//         'ReadCapacityUnits' => 5,
-//         'WriteCapacityUnits' => 5
-//     ]
-// ];
+        
+    ],
+    'AttributeDefinitions' => [
+        // [
+        //     'AttributeName' => 'user_id',
+        //     'AttributeType' => 'N'
+        // ],
+        [
+            'AttributeName' => 'friendpair',
+            'AttributeType' => 'S'
+        ],
+        [
+            'AttributeName' => 'timestamp',
+            'AttributeType' => 'N'
+        ],
+        
+        
+    ],
+    'ProvisionedThroughput' => [
+        'ReadCapacityUnits' => 5,
+        'WriteCapacityUnits' => 5
+    ]
+];
 
-// try {
-//     $result = $dynamodb->createTable($params);
-//     echo 'Created table.  Status: ' . 
-//         $result['TableDescription']['TableStatus'] ."\n";
+try {
+    $result = $dynamodb->createTable($params);
+    echo 'Created table.  Status: ' . 
+        $result['TableDescription']['TableStatus'] ."\n";
 
-// } catch (DynamoDbException $e) {
-//     echo "Unable to create table:\n";
-//     echo $e->getMessage() . "\n";
-// }
+} catch (DynamoDbException $e) {
+    echo "Unable to create table:\n";
+    echo $e->getMessage() . "\n";
+}
 /** END OF WORKING CODE FOR CREATING TABLES */
 
 ?>

@@ -9,10 +9,16 @@ $s3 = new S3Functions();
 
 $friends = $app->FriendList($_SESSION['username']);
 
+// debug
+// $app->sendMessage($_SESSION['username'], 'alice', "message1");
+// $app->sendMessage($_SESSION['username'], 'alice', "message2message2message2message2message2message2message2message2message2message2message2");
+// $app->sendMessage('alice', $_SESSION['username'], "message3message2message2message2message2message2message2message2message2message2message2message2");
+
 $no_friend_selected = "";
-$target_friend;
+$target_friend = "";
+$target_friendname = "";
 $target_friend_nametag = "";
-$messages;
+$messages = "";
 
 if (empty($_GET['user'])) {
     $no_chat_selected = "Select a friend to start messaging!";
@@ -20,11 +26,15 @@ if (empty($_GET['user'])) {
     $friendname = $_GET['user'];
     $result = $app->UserDetails($friendname);
     $target_friend = $result[0];
+    $target_friendname = $target_friend['username']['S'];
     $target_friend_nametag = $target_friend['fullname']['S'] . " (" . $target_friend['username']['S'] . ")";
     $messages = $app->FetchMessages($_SESSION['username'], $friendname);
 }
 
-
+// user sent a message
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $app->sendMessage($_SESSION['username'], $_POST['friendname'], $_POST['message']);
+}
 
 ?>
 
@@ -35,7 +45,7 @@ if (empty($_GET['user'])) {
 
     <title>Messages</title>
 
-    <link rel="stylesheet" href="css/about-me.css">
+    <link rel="stylesheet" href="../css/style.css">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -113,33 +123,39 @@ if (empty($_GET['user'])) {
             <?php if ($target_friend) { ?>
                 <h4><?php echo $target_friend_nametag; ?></h4>
             <?php } ?>
-            <?php if (!$friendname) { ?>
+            <?php if (!$target_friend) { ?>
                 <h4><?php echo 'Pick a friend to start a conversation with' ?></h4>
             <?php } ?>
             <hr>
 
-            <textarea>
-            <?php
-            if ($messages) {
-                foreach ($messages as $message) {
-                    $userDetails = $app->UserDetails($user['friendname']['S']);
-                    // var_dump($userDetails);
-                    $message_author = $message['author']['S'];
-                    $message_timestamp = $message['timestamp']['N'];
-                    $message_content = $message['content']['S'];
-                    echo $message_content;
-            ?>
-               
-            <?php }
-            } ?>
-            </textarea>
+            <div class="chat-box">
+                <?php
+                if ($messages) {
+                    foreach ($messages as $message) {
+                        $message_author = $message['author']['S'];
+                        $message_timestamp = $message['timestamp']['N'];
+                        $message_content = $message['content']['S'];
 
-            <form style="width:100%;" name="send-message" action="" method="post">
-                <input type="text" name="fullname" placeholder="Full Name" required />
-                <input type="text" name="username" placeholder="Username" required />
-                <input type="email" name="email" placeholder="Email" required />
-                <input type="password" name="password" placeholder="Password" required />
-                <input type="submit" name="submit" value="Register" />
+                        $userDetails = $app->UserDetails($message_author);
+                        $target_fullname = $userDetails[0]['fullname']['S'];
+                        $target_username = $userDetails[0]['username']['S'];
+                        $target_userImage = $s3->getProfilePictureLink($target_username);
+                        // var_dump($userDetails);
+
+                ?>
+                    <div class="message-box">
+                        <img src=<?php echo $target_userImage; ?> style="width:50px;height:50px;">
+                        <a href=<?php echo "messaging.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
+                        <p><?php echo $message_content; ?></p>
+                    </div>
+                <?php }
+                } ?>
+            </div>
+
+            <form style="width:100%;" name="send-message" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+                <input style="width:100%;" type="text" name="message" required />
+                <input type="hidden" name="friendname" value=<?php echo $target_friendname; ?> required />
+                <input type="submit" name="submit" value="Send" />
             </form>
         </div>
 
