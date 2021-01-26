@@ -75,34 +75,19 @@ $json = json_decode($getContent, true);
 
   </head>
   <body>
-    <div class="container">
-      <nav class="navbar navbar-default">
-        <ul class="nav navbar-nav">
-          <li><a href="#news-feed">News Feed</a></li>
-          <li><a href="#about-me">About Me</a></li>
-          <li><a href="#contact-me">Contact Me</a></li>
-        </ul>
 
-           <form class="form-inline">
-            <div class="input-group">
-              <div class="input-group-prepend">
-            </div>
-
-            
-             </div>
-           </form>
-
-           <!-- SEARCH USERNAME -->
-           <form action="display-user.php" method="get" name="form"> 
-            <span class="right_header"> 
-              <!-- <input name="search_username" id="search_username" type="text" class="form-control" placeholder="Search Username" aria-label="Username" aria-describedby="basic-addon1"> --><a href="databaseIndex.php"><button type="button" class="btn btn-primary btn-lg">Search Profile</button>
-              </a>
-            </span>
-          </form>
-      </nav>
-
-
-
+     <div class="container">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <li><a href="newsfeed.php">News Feed</a></li>
+                <li><a href="messages/messaging.php">Messages</a></li>
+                <li><a href="../display-user.php">My Profile</a></li>
+                <li><a href="update-profile.php">Update Profile</a></li>
+                <li><a href="connect/connect-list.php">Connected Friends</a></li>
+                <li><a href="connect/connect-request-list.php">Connect Requests</a></li>
+                <li><a href="speechToText/index.php">Fun Implementations!</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            </ul>
       
       <section id="greetings" class="jumbotron">
         <h1>Cloud Computing Assignment Two <script language="javascript">
