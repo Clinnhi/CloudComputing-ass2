@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 } ?>
             </div>
 
-            <form style="width:100%;" name="send-message" action="<?= $_SERVER['PHP_SELF'] ?>" method="post">
+            <form style="width:100%;" name="send-message" action="<?php echo "messaging.php?user=" . $target_friendname; ?>" method="post">
                 <input style="width:100%;" type="text" name="message" required />
                 <input type="hidden" name="friendname" value=<?php echo $target_friendname; ?> required />
                 <input type="submit" name="submit" value="Send" />
