@@ -2,6 +2,7 @@
 
 require 'vendor\autoload.php';
 
+use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
 use Aws\Exception\AwsException;
 use Aws\Common\Exception\MultipartUploadException;
@@ -22,9 +23,20 @@ class S3Functions
             ]
         ]);
 
+        // cloudfront
+        $this->cloudFront = new CloudFrontClient([
+            'key_pair_id' => 'APKAJFPLWRBFOUOGUJRA',
+            'private_key' => 'pk-APKAJFPLWRBFOUOGUJRA.pem',
+            'region'   => 'ap-southeast-2',
+            'version'  => 'latest',
+        ]);
+
         // S3 BUCKET URLS
         $this->profileUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/profile/';
         $this->postUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/post/';
+
+        // CloudFront URLS
+        $this->cloudFrontUrl = 'https://d22qr0ael8s008.cloudfront.net/';
     }
 
     function __destruct()
@@ -38,10 +50,10 @@ class S3Functions
         return $this->profileUrl . $username;
     }
 
-    /** Function for getting the link of a post picture */
-    public function getPostPictureLink($imageURL)
+    /** Function for getting the link of a post picture*/
+    public function getPostMediaLink($imageURL)
     {
-        return $this->postUrl . $imageURL;
+        return $this->cloudFrontUrl . $imageURL;
     }
 
     /** Function for updating a user's profile picture */
@@ -98,5 +110,17 @@ class S3Functions
             return $e;
         }
     }
+
+    // /** Test function for using cloud front */
+    // public function testcloudfront() {
+    //     $object = 'cat.mp4';
+    //     $expiry = new DateTime('+10 minutes');
+    //     $url = $this->cloudFront->getSignedUrl([
+    //         'url' => $this->cloudFrontUrl . "/" . $object,
+    //         'expires' => $expiry->getTimestamp()
+    //     ]);
+
+    //     return $url;
+    // }
 
 }

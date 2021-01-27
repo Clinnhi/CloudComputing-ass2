@@ -18,14 +18,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $timestamp = time(); // get timestamp
     // Check if user uploaded an image
     if (isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
-        $app->CreatePost($username, $_POST['content'], $username . $timestamp);
-        $s3->uploadPostPicture($username, $_FILES['userfile']['tmp_name'], $timestamp);
-        $post_success_message = 'Post successfully made!';
+        try {
+            $app->CreatePost($username, $_POST['content'], $username . $timestamp);
+            $s3->uploadPostPicture($username, $_FILES['userfile']['tmp_name'], $timestamp);
+            $post_success_message = 'Post successfully made!';
+        } catch (Exception $e) {
+            $post_error_message = 'Invalid image file or image file too large!';
+        }
     }
     // else if no image uploaded
     else {
-        $app->CreatePost($username, $_POST['content'], '-');
-        $post_success_message = 'Post successfully made!';
+        try {
+            $app->CreatePost($username, $_POST['content'], '-');
+            $post_success_message = 'Post successfully made!';
+        } catch (Exception $e) {
+            $post_error_message = 'Invalid image file or image file too large!';
+        }
     }
 }
 
@@ -92,7 +100,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div>
             <h2>Write a new post</h2>
             <form enctype="multipart/form-data" action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
-                <textarea name="content" placeholder="Write something..." required="required"></textarea>
+                <textarea style="width:50%;" name="content" placeholder="Write something..." required="required"></textarea>
+                <p>Upload an image</p>
                 <input name="userfile" type="file"><input type="submit" value="Upload">
                 <br>
                 <button type="submit" class="btn btn-primary btn-block btn-large" style="width:150px;">Post</button>

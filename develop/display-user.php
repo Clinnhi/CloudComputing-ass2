@@ -369,7 +369,8 @@ if (isset($_GET['submit'])) {
                     <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
                     <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
                     <?php if ($post['imageURL']['S'] != '-') {
-                        echo '<img src=' . $s3->getPostPictureLink($post['imageURL']['S']) . ' style="width:600px;height:400px; margin-bottom:10px;">';
+                        $mediaURL = $s3->getPostMediaLink($post['imageURL']['S']);
+                        echo '<img src=' . $mediaURL . ' style="width:600px;height:400px; margin-bottom:10px;">';
                     } ?>
 
                     <?php if ($target_username == $_SESSION['username']) { ?>
