@@ -95,9 +95,13 @@ $posts = $app->FetchAllFriendsPosts($_SESSION['username']);
 
                 <div style="border-style: groove;padding: 10px;">
                     <img src=<?php echo $userImage; ?> style="width:50px;height:50px;"><a href=<?php echo "display-user.php?user=" . $target_username ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
-                    
                     <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
                     <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
+                    <?php 
+                        if ($post['language']['S'] != 'en') {
+                            echo '<p style="font-size:20px;font-style:italic;">Translation:<br>' . $translate->translateText($post['content']['S'], $post['language']['S']) . '</p>';
+                        }
+                    ?>
                     <?php if ($post['imageURL']['S'] != '-') {
                         $mediaURL = $s3->getPostMediaLink($post['imageURL']['S']);
                         echo '<img src=' . $mediaURL . ' style="width:600px;height:400px; margin-bottom:10px;">';

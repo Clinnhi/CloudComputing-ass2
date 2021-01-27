@@ -6,8 +6,11 @@ session_start();
 
 require 'functions/dynamodb_functions.php';
 require 'functions/s3_functions.php';
+require 'functions/translate_function.php';
+
 $app = new DynamoDBFunctions();
 $s3 = new S3Functions();
+$translate = new AwsTranslateFunctions();
 
 if (empty($_SESSION['username'])) {
     header("Location: loginpage.php");
@@ -368,6 +371,11 @@ if (isset($_GET['submit'])) {
 
                     <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
                     <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
+                    <?php 
+                        if ($post['language']['S'] != 'en') {
+                            echo '<p style="font-size:20px;font-style:italic;">Translation:<br>' . $translate->translateText($post['content']['S'], $post['language']['S']) . '</p>';
+                        }
+                    ?>
                     <?php if ($post['imageURL']['S'] != '-') {
                         $mediaURL = $s3->getPostMediaLink($post['imageURL']['S']);
                         echo '<img src=' . $mediaURL . ' style="width:600px;height:400px; margin-bottom:10px;">';

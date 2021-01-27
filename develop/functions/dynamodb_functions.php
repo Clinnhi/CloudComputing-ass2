@@ -560,7 +560,7 @@ class DynamoDBFunctions
     }
 
     /** Create post function */
-    public function CreatePost($username, $content, $imageURL)
+    public function CreatePost($username, $content, $imageURL, $language)
     {
         $tableName = 'Posts';
 
@@ -573,7 +573,8 @@ class DynamoDBFunctions
                 'username' => $username,
                 'timestamp' => $timestamp,
                 'content' => $content,
-                'imageURL' => $imageURL
+                'imageURL' => $imageURL,
+                'language' => $language
             ]);
 
             $item = $this->marshaler->marshalJson($json);

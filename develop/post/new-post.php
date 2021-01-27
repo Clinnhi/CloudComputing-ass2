@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Check if user uploaded an image
     if (isset($_FILES['userfile']) && $_FILES['userfile']['error'] == UPLOAD_ERR_OK && is_uploaded_file($_FILES['userfile']['tmp_name'])) {
         try {
-            $app->CreatePost($username, $_POST['content'], $username . $timestamp);
+            $app->CreatePost($username, $_POST['content'], $username . $timestamp, $_POST['language']);
             $s3->uploadPostPicture($username, $_FILES['userfile']['tmp_name'], $timestamp);
             $post_success_message = 'Post successfully made!';
         } catch (Exception $e) {
@@ -29,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // else if no image uploaded
     else {
         try {
-            $app->CreatePost($username, $_POST['content'], '-');
+            $app->CreatePost($username, $_POST['content'], '-', $_POST['language']);
             $post_success_message = 'Post successfully made!';
         } catch (Exception $e) {
             $post_error_message = 'Invalid image file or image file too large!';
@@ -104,6 +104,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p>Upload an image</p>
                 <input name="userfile" type="file"><input type="submit" value="Upload">
                 <br>
+                <label>Language</label>
+                <select name="language" id="language">
+                    <option value="en">English</option>
+                    <option value="ar">Arabic</option>
+                    <option value="zh">Chinese (Simplified)</option>
+                    <option value="fr">French</option>
+                    <option value="de">German</option>
+                    <option value="pt">Portuguese</option>
+                    <option value="es">Spanish</option>
+                </select>
                 <button type="submit" class="btn btn-primary btn-block btn-large" style="width:150px;">Post</button>
             </form>
         </div>
