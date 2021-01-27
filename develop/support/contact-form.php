@@ -1,4 +1,6 @@
 <?php
+// Start Session
+session_start();
 if (empty($_SESSION['username'])) {
     header("Location: ../loginpage.php");
 }
