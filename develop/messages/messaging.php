@@ -163,6 +163,7 @@ if (empty($_GET['user'])) {
                     <div class="message-box">
                         <img src=<?php echo $target_userImage; ?> style="width:50px;height:50px;">
                         <a href=<?php echo "../display-user.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
+                        <p style="text-align:right;float:right; color:grey"><?php echo 'sent at ' . date("Y-m-d  h:i:s", $message_timestamp); ?></p><br>
                         <p><?php echo $message_content; ?></p>
                     </div>
                 <?php }
