@@ -1,3 +1,8 @@
+<?php
+if (empty($_SESSION['username'])) {
+    header("Location: ../loginpage.php");
+}
+?>
 <html>
 
 <head>

@@ -6,6 +6,10 @@ session_start();
 require 'functions/dynamodb_functions.php';
 $app = new DynamoDBFunctions();
 
+if (empty($_SESSION['username'])) {
+    header("Location: loginpage.php");
+}
+
 $update_error_message = '';
 $update_success_message = '';
 

@@ -7,6 +7,10 @@ require '../functions/s3_functions.php';
 $app = new DynamoDBFunctions();
 $s3 = new S3Functions();
 
+if (empty($_SESSION['username'])) {
+    header("Location: ../loginpage.php");
+}
+
 $result = $app->FriendRequestList($_SESSION['username']);
 ?>
 
