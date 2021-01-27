@@ -158,12 +158,11 @@ if (isset($_GET['submit'])) {
 
         <section id="greetings" class="jumbotron">
             <span class="center">
-                <?php 
+                <?php
                 if ($target_username == $_SESSION['username']) {
                     echo '<h2>Your profile page.</h2>';
                     echo '<button onclick="location.href=\'post/new-post.php\'">Write a new post</button>';
-                }
-                else {
+                } else {
                     echo '<h2> Welcome To ' . $full_name . '\'s Profile Page. </br></h2>';
                 }
                 ?>
@@ -296,39 +295,36 @@ if (isset($_GET['submit'])) {
             <div class="row">
                 <div class="col-md-4">
                     Cryptocurrency One:
-            <!-- Sample PHP API - Code to retrieve btc price -->
-                    <?php if ($crypto_one != '-'){
-                      echo strtoupper('$'. $crypto_one);
-                      echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>';
-                  }
-                    else{
-                      echo 'No crypto selected';
+                    <!-- Sample PHP API - Code to retrieve btc price -->
+                    <?php if ($crypto_one != '-') {
+                        echo strtoupper('$' . $crypto_one);
+                        echo '<br> Price for ' . $crypto_one . ' is:  $' . round($json['prices'][$crypto_one]["last"], 2) . '<br>';
+                    } else {
+                        echo 'No crypto selected';
                     }
-                     ?>
+                    ?>
                 </div>
 
                 <div class="col-md-4">
                     Cryptocurrency Two:
-                    <?php if ($crypto_two != '-'){
-                      echo strtoupper('$'. $crypto_two);
-                      echo '<br> Price for ' . $crypto_two . ' is:  $' . round($json['prices'][$crypto_two]["last"], 2) . '<br>';
-                  }
-                    else{
-                      echo 'No crypto selected';
+                    <?php if ($crypto_two != '-') {
+                        echo strtoupper('$' . $crypto_two);
+                        echo '<br> Price for ' . $crypto_two . ' is:  $' . round($json['prices'][$crypto_two]["last"], 2) . '<br>';
+                    } else {
+                        echo 'No crypto selected';
                     }
-                     ?>
+                    ?>
                 </div>
 
                 <div class="col-md-4">
                     Cryptocurrency Three:
-                    <?php if ($crypto_three != '-'){
-                      echo strtoupper('$'. $crypto_three);
-                      echo '<br> Price for ' . $crypto_three . ' is:  $' . round($json['prices'][$crypto_three]["last"], 2) . '<br>';
-                  }
-                    else{
-                      echo 'No crypto selected';
+                    <?php if ($crypto_three != '-') {
+                        echo strtoupper('$' . $crypto_three);
+                        echo '<br> Price for ' . $crypto_three . ' is:  $' . round($json['prices'][$crypto_three]["last"], 2) . '<br>';
+                    } else {
+                        echo 'No crypto selected';
                     }
-                     ?>
+                    ?>
 
                 </div>
             </div>
@@ -339,43 +335,47 @@ if (isset($_GET['submit'])) {
         <section id="links">
             <h1>My Three Favourite Websites</h1>
             <div class="row">
-              <div class="col-md-4">
-                <?php echo 'Website One: ' . ucfirst($website_one) ?>
-              </div>
+                <div class="col-md-4">
+                    <?php echo 'Website One: ' . ucfirst($website_one) ?>
+                </div>
 
-              <div class="col-md-4">
-                <?php echo 'Website One: ' . ucfirst($website_two) ?>
-              </div>
+                <div class="col-md-4">
+                    <?php echo 'Website One: ' . ucfirst($website_two) ?>
+                </div>
 
-              <div class="col-md-4">
-                <?php echo 'Website One: ' . ucfirst($website_three) ?>
-              </div>
+                <div class="col-md-4">
+                    <?php echo 'Website One: ' . ucfirst($website_three) ?>
+                </div>
             </div>
-      </section>
+        </section>
 
         <!-- USER'S POSTS -->
         <section id="posts">
             <h1>My Posts</h1>
             <?php
-                if (empty($user_post)) {
-                    echo 'You don\'t have any posts yet!';
-                }
+            if (empty($user_post)) {
+                echo 'You don\'t have any posts yet!';
+            }
             ?>
             <?php foreach ($user_post as $post) { ?>
 
                 <div style="border-style: groove;padding: 10px;">
                     <img src=<?php echo $userImage; ?> style="width:50px;height:50px;"><a href=<?php echo "display-user.php?user=" . $target_username ?>><?php echo $full_name . " (" . $target_username . ")"; ?></a>
-                    
+
                     <p style="text-align:right;float:right; color:grey"><?php echo 'posted at ' . date("Y-m-d  h:i:s", $post['timestamp']['N']); ?></p><br>
                     <p style="font-size: 25px;"><?php echo $post['content']['S']; ?></p>
-                    <?php if ($post['imageURL']['S'] != '-') { 
+                    <?php if ($post['imageURL']['S'] != '-') {
                         echo '<img src=' . $s3->getPostPictureLink($post['imageURL']['S']) . ' style="width:600px;height:400px; margin-bottom:10px;">';
                     } ?>
-                    <form action="post/delete-post.php" method="post">
-                        <input type="hidden" name="timestamp" value=<?php echo $post['timestamp']['N'] ?>>
-                        <input type="hidden" name="username" value=<?php echo $target_username ?>>
-                        <button style="border-color: red; color:red;" id="primary">Delete Post</button>
-                    </form>
+
+                    <?php if ($target_username == $_SESSION['username']) { ?>
+                        <form action="post/delete-post.php" method="post">
+                            <input type="hidden" name="timestamp" value=<?php echo $post['timestamp']['N'] ?>>
+                            <input type="hidden" name="username" value=<?php echo $target_username ?>>
+                            <button style="border-color: red; color:red;" id="primary">Delete Post</button>
+                        </form>
+                    <?php } ?>
+
                 </div>
                 <br>
 
