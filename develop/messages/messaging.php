@@ -20,6 +20,12 @@ $target_friendname = "";
 $target_friend_nametag = "";
 $messages = "";
 
+// user sent a message - POST
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $app->sendMessage($_SESSION['username'], $_POST['friendname'], $_POST['message']);
+}
+
+// GET method
 if (empty($_GET['user'])) {
     $no_chat_selected = "Select a friend to start messaging!";
 } else {
@@ -31,10 +37,7 @@ if (empty($_GET['user'])) {
     $messages = $app->FetchMessages($_SESSION['username'], $friendname);
 }
 
-// user sent a message
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $app->sendMessage($_SESSION['username'], $_POST['friendname'], $_POST['message']);
-}
+
 
 ?>
 
@@ -55,6 +58,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
 
+    <style> 
+            div.scroll {
+                /* width: 100%;  */
+                height: 80%; 
+                overflow-x: hidden; 
+                overflow-y: auto; 
+                text-align:justify; 
+            } 
+        </style> 
 </head>
 
 <body>
@@ -98,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
 
-        <div style="width:20%;float:left;">
+        <div style="width:20%;float:left;" class="scroll">
             <?php foreach ($friends as $user) {
                 $userDetails = $app->UserDetails($user['friendname']['S']);
                 // var_dump($userDetails);
@@ -119,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php } ?>
         </div>
 
-        <div style="width:80%; height:80%; float:right;border-style: groove;padding: 10px;">
+        <div style="width:80%; float:right;border-style: groove;padding: 10px;">
             <?php if ($target_friend) { ?>
                 <h4><?php echo $target_friend_nametag; ?></h4>
             <?php } ?>
@@ -128,7 +140,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <?php } ?>
             <hr>
 
-            <div class="chat-box">
+            <div class="scroll">
+                <?php 
+                    if (!$messages) {
+                        echo 'Empty conversation. Say Hi now!';
+                    }
+                ?>
                 <?php
                 if ($messages) {
                     foreach ($messages as $message) {
@@ -145,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 ?>
                     <div class="message-box">
                         <img src=<?php echo $target_userImage; ?> style="width:50px;height:50px;">
-                        <a href=<?php echo "messaging.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
+                        <a href=<?php echo "../display-user.php?user=" . $target_username; ?>><?php echo $target_fullname . " (" . $target_username . ")"; ?></a>
                         <p><?php echo $message_content; ?></p>
                     </div>
                 <?php }
