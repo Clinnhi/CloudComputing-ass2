@@ -17,7 +17,6 @@
 
                     <p class="lead">This page is used to send  users an email .</p>
 
-                    <!-- We're going to place the form here in the next step -->
                     <form id="send.php" method="post" action="send.php" role="form">
 
     <div class="messages"></div>
