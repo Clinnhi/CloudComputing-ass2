@@ -44,6 +44,26 @@ $sdk = new Aws\Sdk([
 $dynamodb = $sdk->createDynamoDb();
 $marshaler = new Marshaler();
 
+$json = json_encode([
+    'username' => 'mock',
+    'user_type' => 'User',
+    'password' => rand(1000,10000)
+]);
+
+$item = $marshaler->marshalJson($json);
+
+$params = [
+    'TableName' => 'Users',
+    'Item' => $item
+];
+
+try {
+    $result = $dynamodb->putItem($params);
+    return true;
+} catch (DynamoDbException $e) {
+    return $e;
+}
+
 
 /** WORKING CODE FOR QUERYING DATA (KEY VALUES) FROM TABLE */
 // $tableName = 'Users';
@@ -210,55 +230,55 @@ $marshaler = new Marshaler();
 
 
 /** WORKING CODE FOR CREATING TABLES */
-$params = [
-    'TableName' => 'Messages',
-    'KeySchema' => [
-        // [
-        //     'AttributeName' => 'user_id',
-        //     'KeyType' => 'HASH'  //Partition key
-        // ],
-        [
-            'AttributeName' => 'friendpair',
-            'KeyType' => 'HASH'  //Partition key
-        ],
-        [
-            'AttributeName' => 'timestamp',
-            'KeyType' => 'RANGE'  // Sort
-        ],
-        
-        
-    ],
-    'AttributeDefinitions' => [
-        // [
-        //     'AttributeName' => 'user_id',
-        //     'AttributeType' => 'N'
-        // ],
-        [
-            'AttributeName' => 'friendpair',
-            'AttributeType' => 'S'
-        ],
-        [
-            'AttributeName' => 'timestamp',
-            'AttributeType' => 'N'
-        ],
-        
-        
-    ],
-    'ProvisionedThroughput' => [
-        'ReadCapacityUnits' => 5,
-        'WriteCapacityUnits' => 5
-    ]
-];
+// $params = [
+//     'TableName' => 'Messages',
+//     'KeySchema' => [
+//         // [
+//         //     'AttributeName' => 'user_id',
+//         //     'KeyType' => 'HASH'  //Partition key
+//         // ],
+//         [
+//             'AttributeName' => 'friendpair',
+//             'KeyType' => 'HASH'  //Partition key
+//         ],
+//         [
+//             'AttributeName' => 'timestamp',
+//             'KeyType' => 'RANGE'  // Sort
+//         ],
 
-try {
-    $result = $dynamodb->createTable($params);
-    echo 'Created table.  Status: ' . 
-        $result['TableDescription']['TableStatus'] ."\n";
 
-} catch (DynamoDbException $e) {
-    echo "Unable to create table:\n";
-    echo $e->getMessage() . "\n";
-}
+//     ],
+//     'AttributeDefinitions' => [
+//         // [
+//         //     'AttributeName' => 'user_id',
+//         //     'AttributeType' => 'N'
+//         // ],
+//         [
+//             'AttributeName' => 'friendpair',
+//             'AttributeType' => 'S'
+//         ],
+//         [
+//             'AttributeName' => 'timestamp',
+//             'AttributeType' => 'N'
+//         ],
+
+
+//     ],
+//     'ProvisionedThroughput' => [
+//         'ReadCapacityUnits' => 5,
+//         'WriteCapacityUnits' => 5
+//     ]
+// ];
+
+// try {
+//     $result = $dynamodb->createTable($params);
+//     echo 'Created table.  Status: ' . 
+//         $result['TableDescription']['TableStatus'] ."\n";
+
+// } catch (DynamoDbException $e) {
+//     echo "Unable to create table:\n";
+//     echo $e->getMessage() . "\n";
+// }
 /** END OF WORKING CODE FOR CREATING TABLES */
 
 ?>

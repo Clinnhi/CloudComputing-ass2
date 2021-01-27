@@ -70,7 +70,7 @@ class DynamoDBFunctions
 
 
     /** Register function */
-    public function Register($input_username, $input_fullname, $input_password, $input_email)
+    public function Register($input_username, $input_fullname, $input_password, $input_email, $input_phone)
     {
         $tableName = 'Users';
         $user_type = 'User';
@@ -108,6 +108,7 @@ class DynamoDBFunctions
                     'website1' => "-",
                     'website2' => "-",
                     'website3' => "-",
+                    'phone' => $input_phone
                 ]);
 
                 $item = $this->marshaler->marshalJson($json);
@@ -132,7 +133,7 @@ class DynamoDBFunctions
     }
 
     /** UpdatePersonalInfo function */
-    public function UpdatePersonalInfo($username, $fullname, $password, $email, $aboutme, $crypto1, $crypto2, $crypto3, $website1, $website2, $website3)
+    public function UpdatePersonalInfo($username, $fullname, $password, $email, $aboutme, $crypto1, $crypto2, $crypto3, $website1, $website2, $website3, $phone)
     {
         $tableName = 'Users';
         $user_type = 'User';
@@ -170,6 +171,7 @@ class DynamoDBFunctions
                     'website1' => $website1,
                     'website2' => $website2,
                     'website3' => $website3,
+                    'phone' => $phone
                 ]);
 
                 $item = $this->marshaler->marshalJson($json);
@@ -190,6 +192,36 @@ class DynamoDBFunctions
             }
         } catch (DynamoDbException $e) {
             return false;
+        }
+    }
+
+    /** Reset password function */
+    public function ResetPassword($username)
+    {
+        $tableName = 'Users';
+        $user_type = 'User';
+
+        // creating random password
+        $random_password = rand(1000,10000);
+
+        $json = json_encode([
+            'username' => $username,
+            'user_type' => $user_type,
+            'password' => $random_password
+        ]);
+        
+        $item = $this->marshaler->marshalJson($json);
+        
+        $params = [
+            'TableName' => 'Users',
+            'Item' => $item
+        ];
+        
+        try {
+            $result = $this->dynamodb->putItem($params);
+            return $random_password;
+        } catch (DynamoDbException $e) {
+            return $e;
         }
     }
 
@@ -727,4 +759,5 @@ class DynamoDBFunctions
             return false;
         }
     }
+
 }

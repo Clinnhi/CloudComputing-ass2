@@ -69,6 +69,8 @@ if (!empty($_POST['username'])) {
         </form>
         <br>
         <a style="color:white;" href='registerpage.php'>Not registered yet? Register Here</a>
+        <br>
+        <a style="color:white;" href='reset-password-page.php'>Forgot Password?</a>
 
     </div>
 

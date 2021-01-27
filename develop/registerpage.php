@@ -14,12 +14,13 @@ if (!empty($_POST['username'])) {
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
     $username = trim($_POST['username']);
+    $phone = trim($_POST['phone']);
     $password = trim($_POST['password']);
 
     if ($username == "" || $fullname == "" || $email == "" || $password == "") {
         $register_error_message = 'Some fields is empty';
     } else {
-        if ($app->Register($username, $fullname, $password, $email)) {
+        if ($app->Register($username, $fullname, $password, $email, $phone)) {
             $register_success_message = 'Successfully registered!';
         } else {
             $register_error_message = 'Username is taken. Please try a different one.';
@@ -50,6 +51,7 @@ if (!empty($_POST['username'])) {
             <input type="text" name="fullname" placeholder="Full Name" required />
             <input type="text" name="username" placeholder="Username" required />
             <input type="email" name="email" placeholder="Email" required />
+            <input type="phone" name="phone" placeholder="Phone Number" required />
             <input type="password" name="password" placeholder="Password" required />
             <input type="submit" name="submit" value="Register" />
         </form>
