@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor\autoload.php';
+require 'vendor/autoload.php';
 
 use Aws\Translate\TranslateClient; 
 use Aws\Exception\AwsException;
@@ -12,13 +12,8 @@ class AwsTranslateFunctions
     function __construct()
     {
         $this->translateClient = new Aws\Translate\TranslateClient([
-            'profile' => 'project1',
             'region'   => 'ap-southeast-2',
-            'version'  => 'latest',
-            'validate' => false,
-            'http'    => [
-                'verify' => 'C:\AppServ\cacert.pem'
-            ]
+            'version'  => 'latest'
         ]);
 
         $this->marshaler = new Marshaler();

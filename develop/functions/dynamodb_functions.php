@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor\autoload.php';
+require 'vendor/autoload.php';
 
 use Aws\DynamoDb\Exception\DynamoDbException;
 use Aws\DynamoDb\Marshaler;
@@ -11,13 +11,8 @@ class DynamoDBFunctions
     function __construct()
     {
         $this->sdk = new Aws\Sdk([
-            'profile' => 'project1',
             'region'   => 'ap-southeast-2',
-            'version'  => 'latest',
-            'validate' => false,
-            'http'    => [
-                'verify' => 'C:\AppServ\cacert.pem'
-            ]
+            'version'  => 'latest'
         ]);
         $this->dynamodb = $this->sdk->createDynamoDb();
         $this->marshaler = new Marshaler();

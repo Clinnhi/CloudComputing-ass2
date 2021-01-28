@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor\autoload.php';
+require 'vendor/autoload.php';
 
 use Aws\CloudFront\CloudFrontClient;
 use Aws\S3\S3Client;
@@ -14,19 +14,12 @@ class S3Functions
     function __construct()
     {
         $this->s3Client = new S3Client([
-            'profile' => 'project1',
             'region'   => 'ap-southeast-2',
-            'version'  => 'latest',
-            'validate' => false,
-            'http'    => [
-                'verify' => 'C:\AppServ\cacert.pem'
-            ]
+            'version'  => 'latest'
         ]);
 
         // cloudfront
         $this->cloudFront = new CloudFrontClient([
-            'key_pair_id' => 'APKAJFPLWRBFOUOGUJRA',
-            'private_key' => 'pk-APKAJFPLWRBFOUOGUJRA.pem',
             'region'   => 'ap-southeast-2',
             'version'  => 'latest',
         ]);
