@@ -22,6 +22,7 @@ $userDetails = $userDetails[0];
 $fullname = $userDetails['fullname']['S'];
 $password = $userDetails['password']['S'];
 $email = $userDetails['email']['S'];
+$phone = $userDetails['phone']['S'];
 $about_me = $userDetails['aboutme']['S'];
 
 // Cryptocurrency
@@ -41,6 +42,7 @@ $website3 = $userDetails['website3']['S'];
 if (!empty($_POST['fullname'])) {
     $fullname = trim($_POST['fullname']);
     $email = trim($_POST['email']);
+    $phone = trim($_POST['phone']);
     $password = trim($_POST['password']);
     $user_type = 'User';
     $aboutme = trim($_POST['aboutme']);
@@ -51,7 +53,7 @@ if (!empty($_POST['fullname'])) {
     $website2 = trim($_POST['website2']);
     $website3 = trim($_POST['website3']);
 
-    $result = $app->UpdatePersonalInfo($username, $fullname, $password, $email, $aboutme, $crypto1, $crypto2, $crypto3, $website1, $website2, $website3);
+    $result = $app->UpdatePersonalInfo($username, $fullname, $password, $email, $aboutme, $crypto1, $crypto2, $crypto3, $website1, $website2, $website3, $phone);
 
     if ($result) {
         $update_success_message = 'Details successfully updated';
@@ -132,6 +134,9 @@ if (!empty($_POST['fullname'])) {
 
             <label name="email" class="col-sm-3 control-label">Email <span class="asterisk">*</span></label>
             <div class="col-sm-9"><input type="text" name="email" value=<?php echo '"' . $email . '"'; ?> required="required" /></div>
+
+            <label name="phone" class="col-sm-3 control-label">Phone <span class="asterisk">*</span></label>
+            <div class="col-sm-9"><input type="text" name="phone" value=<?php echo '"' . $phone . '"'; ?> required="required" /></div>
 
             <label name="aboutme" class="col-sm-3 control-label">About Me <span class="asterisk">*</span></label>
             <div class="col-sm-9"><textarea name="aboutme" required="required"><?php echo $about_me; ?></textarea></div>
