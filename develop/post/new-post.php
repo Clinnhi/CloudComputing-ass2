@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- SEARCH USERNAME -->
             <form action="display-user.php" method="get" name="form">
                 <span class="right_header">
-                    <a href="search-user.php"><button type="button" class="btn btn-primary btn-lg">Find Friends</button>
+                    <a href="../search-user.php"><button type="button" class="btn btn-primary btn-lg">Find Friends</button>
                     </a>
                 </span>
             </form>
