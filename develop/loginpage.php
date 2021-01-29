@@ -59,7 +59,7 @@ if (!empty($_POST['username'])) {
         <h1>Sign In</h1>
         <?php
         if ($login_error_message != "") {
-            echo '<div class="alert alert-danger"><strong>Error: </strong> ' . $login_error_message . '</div>';
+            echo '<div style="color:white;" class="alert alert-danger"><strong>Error: </strong> ' . $login_error_message . '</div>';
         }
         ?>
         <form action="loginpage.php" method="post">

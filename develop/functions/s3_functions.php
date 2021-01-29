@@ -25,11 +25,12 @@ class S3Functions
         ]);
 
         // S3 BUCKET URLS
-        $this->profileUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/profile/';
-        $this->postUrl = 'https://imagesfblite.s3-ap-southeast-2.amazonaws.com/post/';
+        $this->bucketname = 'imagesfblite2';
+        $this->profileUrl = 'https://imagesfblite2.s3-ap-southeast-2.amazonaws.com/profile/';
+        $this->postUrl = 'https://imagesfblite2.s3-ap-southeast-2.amazonaws.com/post/';
 
         // CloudFront URLS
-        $this->cloudFrontUrl = 'https://d22qr0ael8s008.cloudfront.net/';
+        $this->cloudFrontUrl = 'https://d32i8jhnn3o5ck.cloudfront.net/';
     }
 
     function __destruct()
@@ -54,13 +55,13 @@ class S3Functions
         try{
             // delete old profile image
             $result = $this->s3Client->deleteObject([
-                'Bucket' => 'imagesfblite',
+                'Bucket' => $this->bucketname,
                 'Key'    => 'profile/' . $username
             ]);
 
             // upload new profile image
             $uploader = new MultipartUploader($this->s3Client, fopen($file_upload, 'rb'), [
-                'bucket' => 'imagesfblite',
+                'bucket' => $this->bucketname,
                 'key'    => 'profile/' . $username
             ]);
             $result1 = $uploader->upload();
@@ -74,13 +75,13 @@ class S3Functions
         try{
             // try deleting an existing file with same name just to prevent errors
             $result = $this->s3Client->deleteObject([
-                'Bucket' => 'imagesfblite',
+                'Bucket' => $this->bucketname,
                 'Key'    => 'post/' . $username . $timestamp
             ]);
 
             // uploading image
             $uploader = new MultipartUploader($this->s3Client, fopen($file_upload, 'rb'), [
-                'bucket' => 'imagesfblite',
+                'bucket' => $this->bucketname,
                 'key'    => 'post/' . $username . $timestamp
             ]);
             $result1 = $uploader->upload();
@@ -94,7 +95,7 @@ class S3Functions
         try{
             // try deleting an existing file with same name just to prevent errors
             $result = $this->s3Client->deleteObject([
-                'Bucket' => 'imagesfblite',
+                'Bucket' => $this->bucketname,
                 'Key'    => 'post/' . $username . $timestamp
             ]);
 
