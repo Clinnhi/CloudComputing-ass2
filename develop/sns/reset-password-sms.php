@@ -27,12 +27,19 @@ if (!$error) {
     require './vendor/autoload.php';
 
     $params = array(
-        'credentials' => array(
-            'key' => 'AKIARQCLRSM2W6JGYN3C',
-            'secret' => 'xNnE2uEQFCwORTOXEc5SDlVEYa956K48CYAJHGNl',
-        ),
-        'region' => 'us-east-1', // < your aws from SNS Topic region
-        'version' => 'latest'
+        // 'credentials' => array(
+        //     'key' => 'AKIARQCLRSM2W6JGYN3C',
+        //     'secret' => 'xNnE2uEQFCwORTOXEc5SDlVEYa956K48CYAJHGNl',
+        // ),
+        // 'region' => 'us-east-1', // < your aws from SNS Topic region
+        // 'version' => 'latest'
+        'profile' => 'project1',
+        'region'   => 'ap-southeast-2',
+        'version'  => 'latest',
+        'validate' => false,
+        'http'    => [
+            'verify' => 'C:\AppServ\cacert.pem'
+        ]
     );
     $sns = new \Aws\Sns\SnsClient($params);
 
@@ -56,9 +63,7 @@ if (!$error) {
 
     try {
         $result = $sns->publish($args);
-    }
-    catch (Exception $e) {
-        
+    } catch (Exception $e) {
     }
 }
 

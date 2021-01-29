@@ -196,22 +196,45 @@ class DynamoDBFunctions
         $tableName = 'Users';
         $user_type = 'User';
 
+        $user = $this->UserDetails($username);
+        $user = $user[0];
+        $fullname = $user['fullname']['S'];
+        $email = $user['email']['S'];
+        $aboutme = $user['aboutme']['S'];
+        $crypto1 = $user['crypto1']['S'];
+        $crypto2 = $user['crypto2']['S'];
+        $crypto3 = $user['crypto3']['S'];
+        $website1 = $user['website1']['S'];
+        $website2 = $user['website2']['S'];
+        $website3 = $user['website3']['S'];
+        $phone = $user['phone']['S'];
+
         // creating random password
-        $random_password = rand(1000,10000);
+        $random_password = strval(rand(1000, 10000));
 
         $json = json_encode([
             'username' => $username,
             'user_type' => $user_type,
-            'password' => $random_password
+            'fullname' => $fullname,
+            'password' => $random_password,
+            'email' => $email,
+            'aboutme' => $aboutme,
+            'crypto1' => $crypto1,
+            'crypto2' => $crypto2,
+            'crypto3' => $crypto3,
+            'website1' => $website1,
+            'website2' => $website2,
+            'website3' => $website3,
+            'phone' => $phone
         ]);
-        
+
         $item = $this->marshaler->marshalJson($json);
-        
+
         $params = [
             'TableName' => 'Users',
             'Item' => $item
         ];
-        
+
         try {
             $result = $this->dynamodb->putItem($params);
             return $random_password;
@@ -475,7 +498,6 @@ class DynamoDBFunctions
             $result = $this->dynamodb->query($params);
 
             return $result['Items'];
-
         } catch (DynamoDbException $e) {
             return false;
         }
@@ -683,8 +705,7 @@ class DynamoDBFunctions
         // find friendpair
         if ($username < $friendname) {
             $friendpair = $username . "-" . $friendname;
-        }
-        else {
+        } else {
             $friendpair = $friendname . "-" . $username;
         }
 
@@ -705,7 +726,6 @@ class DynamoDBFunctions
             $result = $this->dynamodb->query($params);
 
             return $result['Items'];
-
         } catch (DynamoDbException $e) {
             return false;
         }
@@ -721,8 +741,7 @@ class DynamoDBFunctions
         // find friendpair
         if ($username < $friendname) {
             $friendpair = $username . "-" . $friendname;
-        }
-        else {
+        } else {
             $friendpair = $friendname . "-" . $username;
         }
 
@@ -755,5 +774,4 @@ class DynamoDBFunctions
             return false;
         }
     }
-
 }
