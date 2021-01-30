@@ -27,13 +27,13 @@ if (!$error) {
     require './vendor/autoload.php';
 
     $params = array(
-        'profile' => 'project1',
+        // 'profile' => 'project1',
         'region'   => 'ap-southeast-2',
         'version'  => 'latest',
-        'validate' => false,
-        'http'    => [
-            'verify' => 'C:\AppServ\cacert.pem'
-        ]
+        // 'validate' => false,
+        // 'http'    => [
+        //     'verify' => 'C:\AppServ\cacert.pem'
+        // ]
     );
     $sns = new \Aws\Sns\SnsClient($params);
 
@@ -54,12 +54,8 @@ if (!$error) {
     try {
         $result = $sns->publish($args);
     } catch (Exception $e) {
+        
     }
 }
 
-// echo '<script>alert("Password has been reset successfully!")</script>';
-
 echo '<script>if (window.confirm("Password has been reset successfully! Click OK to go back to Login page.")){window.location.href=\'../loginpage.php\';};</script>';
-
-
-// var_dump($result); // You can check the response

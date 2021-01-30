@@ -113,12 +113,6 @@ $posts = $app->FetchAllFriendsPosts($_SESSION['username']);
         </section>
 
 
-        <!-- Start of CONTACT ME -->
-        <section id="contact-me">
-            <h1>Contact me</h1>
-            <p>Clinton Pham - s3605044@student.rmit.edu.au</p>
-            <p>Sean Tan - s3806690@student.rmit.edu.au</p>
-        </section>
     </div>
 </body>
 

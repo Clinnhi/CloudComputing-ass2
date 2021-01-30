@@ -335,15 +335,27 @@ class DynamoDBFunctions
             'friendname' => $targetname
         ]);
 
+        $json1 = json_encode([
+            'username' => $targetname,
+            'friendname' => $username
+        ]);
+
         $key = $this->marshaler->marshalJson($json);
+        $key1 = $this->marshaler->marshalJson($json1);
 
         $params = [
             'TableName' => $tableName,
             'Key' => $key
         ];
 
+        $params1 = [
+            'TableName' => $tableName,
+            'Key' => $key1
+        ];
+
         try {
             $result = $this->dynamodb->deleteItem($params);
+            $result1 = $this->dynamodb->deleteItem($params1);
         } catch (DynamoDbException $e) {
             return false;
         }
