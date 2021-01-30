@@ -63,10 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <nav class="navbar navbar-default">
             <ul class="nav navbar-nav">
                 <li><a href="../newsfeed.php">News Feed</a></li>
+                <li><a href="messages/messaging.php">Messages</a></li>
                 <li><a href="../display-user.php">My Profile</a></li>
                 <li><a href="../update-profile.php">Update Profile</a></li>
                 <li><a href="../connect/connect-list.php">Connected Friends</a></li>
                 <li><a href="../connect/connect-request-list.php">Connect Requests</a></li>
+                <li><a href="../speechToText/index.php">Transcribe</a></li>
+                <li><a href="../support/contact-form.php">Support Center</a></li>
                 <li><a href="../logout.php">Logout</a></li>
             </ul>
 

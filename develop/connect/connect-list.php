@@ -43,6 +43,7 @@ $result = $app->FriendList($_SESSION['username']);
                 <li><a href="../update-profile.php">Update Profile</a></li>
                 <li><a href="connect-list.php">Connected Friends</a></li>
                 <li><a href="connect-request-list.php">Connect Requests</a></li>
+                <li><a href="../speechToText/index.php">Transcribe</a></li>
                 <li><a href="../support/contact-form.php">Support Center</a></li>
                 <li><a href="../logout.php">Logout</a></li>
             </ul>
